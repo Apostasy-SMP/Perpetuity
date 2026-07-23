@@ -1,9 +1,11 @@
 package net.apostasy.perpetuity;
 
-import net.apostasy.perpetuity.data.ModDataComponents;
 import net.apostasy.perpetuity.registry.ModItems;
+import net.apostasy.perpetuity.remnant.RemnantDataCollector;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ public class Perpetuity implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
-		ModDataComponents.registerDataComponents();
+		ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(id("remnant_data"), new RemnantDataCollector());
 	}
 
 	public static Identifier id(String path) {

@@ -1,17 +1,15 @@
 package net.apostasy.perpetuity.component;
 
-import com.mojang.serialization.Codec;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.component.ComponentType;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 import java.util.function.UnaryOperator;
 
 public class PerpetuityDataComponents {
+    /// To modders depending on Perpetuity: NEVER add this component to your items.
     public static final ComponentType<RemnantComponent> REMNANT = register(
             "remnant",
             builder -> builder.codec(RemnantComponent.CODEC)

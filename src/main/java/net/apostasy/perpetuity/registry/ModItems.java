@@ -1,13 +1,7 @@
 package net.apostasy.perpetuity.registry;
 
 import net.apostasy.perpetuity.Perpetuity;
-import net.apostasy.perpetuity.item.DiamondRemnantItem;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.equipment.ArmorMaterials;
-import net.minecraft.item.equipment.EquipmentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
