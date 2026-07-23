@@ -17,7 +17,6 @@ import java.util.function.Function;
 
 public class ModItems {
     public static final Item DIAMOND_REMNANT = registerItem("diamond_remnant", Item::new);
-//    public static final Item DIAMOND_REMNANT = registerCustomItem("diamond_remnant", Item::new, new Item.Settings().armor(ArmorMaterials.DIAMOND, EquipmentType.CHESTPLATE));
 
     private static Item registerItem(String name, Function<Item.Settings, Item> function) {
         return Registry.register(Registries.ITEM, Perpetuity.id(name),

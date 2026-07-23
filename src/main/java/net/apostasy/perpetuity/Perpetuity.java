@@ -1,5 +1,6 @@
 package net.apostasy.perpetuity;
 
+import net.apostasy.perpetuity.data.ModDataComponents;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -15,6 +16,7 @@ public class Perpetuity implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
+		ModDataComponents.registerDataComponents();
 	}
 
 	public static Identifier id(String path) {

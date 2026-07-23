@@ -2,6 +2,7 @@ package net.apostasy.perpetuity.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.apostasy.perpetuity.Perpetuity;
+import net.apostasy.perpetuity.data.ModDataComponents;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
@@ -10,7 +11,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import org.jspecify.annotations.Nullable;
@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Mixin(LivingEntity.class)
@@ -40,11 +39,11 @@ public abstract class LivingEntityMixin {
         if (this.getEntity().getEntityWorld() instanceof ServerWorld) {
             if (getEntity() instanceof ServerPlayerEntity player) {
                 if (itemStack.hasEnchantments() && itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-
                     Item remnant = getRemnant(itemStack);
                     if (remnant == null) return;
 
-                    ItemStack newStack = new ItemStack(remnant); // need to copy chestplate enchants, data etc
+                    ItemStack newStack = new ItemStack(remnant);
+                    newStack.set(ModDataComponents.REMNANT_ITEM, itemStack);
                     int newSlot = player.getInventory().getEmptySlot();
 
                     if (newSlot == -1) {
