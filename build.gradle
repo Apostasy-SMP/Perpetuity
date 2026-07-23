@@ -20,6 +20,23 @@ fabricApi {
 	}
 }
 
+loom {
+	runs {
+		client {
+			client()
+			name "Minecraft Client"
+			source sourceSets.main
+			runDir "run"
+		}
+		server {
+			server()
+			name "Minecraft Server"
+			source sourceSets.main
+			runDir "run"
+		}
+	}
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
