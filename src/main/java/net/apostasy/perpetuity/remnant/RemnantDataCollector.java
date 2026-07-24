@@ -9,7 +9,9 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Language;
 import org.jspecify.annotations.NonNull;
 
 import java.io.InputStreamReader;
@@ -32,8 +34,11 @@ public class RemnantDataCollector implements FabricResourceReloader {
 
     @Override
     public CompletableFuture<Void> reload(Store store, Executor prepareExecutor, Synchronizer reloadSynchronizer, Executor applyExecutor) {
-        return CompletableFuture.runAsync(() -> {
+        return CompletableFuture.supplyAsync(() -> {
             ResourceManager manager = store.getResourceManager();
+            Object2ObjectOpenHashMap<Identifier, RemnantData> tempTypes = new Object2ObjectOpenHashMap<>();
+            Object2ObjectOpenHashMap<Item, Identifier> tempMappings = new Object2ObjectOpenHashMap<>();
+
             for (Map.Entry<Identifier, Resource> entry : manager.findResources("remnant", path -> path.getPath().endsWith(".json")).entrySet()) {
                 List<String> path = Arrays.stream(entry.getKey().toString().split("/")).toList();
                 Identifier id = Identifier.of(entry.getKey().getNamespace(), path.getLast().replace(".json", ""));
@@ -43,6 +48,10 @@ public class RemnantDataCollector implements FabricResourceReloader {
 
                     if (jsonObject.get("texture") == null) {
                         Perpetuity.LOGGER.warn("Remnant data at {} does not contain a texture reference, ignoring", entry.getKey().toString());
+                        continue;
+                    }
+                    if (jsonObject.get("name") == null) {
+                        Perpetuity.LOGGER.warn("Remnant data at {} does not contain a name translation key, ignoring", entry.getKey().toString());
                         continue;
                     }
                     if (jsonObject.get("repair_items") == null || !jsonObject.get("repair_items").isJsonArray()) {
@@ -55,7 +64,8 @@ public class RemnantDataCollector implements FabricResourceReloader {
                         Item item = Registries.ITEM.get(itemId);
                         repairItems.add(item);
                     });
-                    remnantTypes.put(id, new RemnantData(repairItems, Identifier.of(jsonObject.get("texture").getAsString())));
+
+                    tempTypes.put(id, new RemnantData(repairItems, Text.translatable(jsonObject.get("name").getAsString()), Identifier.of(jsonObject.get("texture").getAsString())));
 
                     if (jsonObject.get("items") == null || !jsonObject.get("items").isJsonArray()) {
                         Perpetuity.LOGGER.warn("Remnant data at {} does not contain items list, ignoring", entry.getKey().toString());
@@ -64,12 +74,23 @@ public class RemnantDataCollector implements FabricResourceReloader {
                     jsonObject.get("items").getAsJsonArray().asList().forEach(element -> {
                         Identifier itemId = Identifier.of(element.getAsString());
                         Item item = Registries.ITEM.get(itemId);
-                        remnantMappings.put(item, id);
+                        tempMappings.put(item, id);
                     });
                 } catch (Exception e) {
                     Perpetuity.LOGGER.error("Failed to register remnant data at path {}: {}", entry.getKey().toString(), e.toString());
                 }
             }
-        });
+            return Map.entry(tempTypes, tempMappings);
+        }, prepareExecutor)
+                .thenCompose(reloadSynchronizer::whenPrepared)
+                .thenAcceptAsync(maps -> {
+            remnantTypes.clear();
+            remnantMappings.clear();
+
+            remnantTypes.putAll(maps.getKey());
+            remnantMappings.putAll(maps.getValue());
+            Perpetuity.LOGGER.info(String.valueOf(remnantTypes));
+            Perpetuity.LOGGER.info(String.valueOf(remnantMappings));
+        }, applyExecutor);
     }
 }

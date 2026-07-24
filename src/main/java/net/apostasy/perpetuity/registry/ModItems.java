@@ -1,6 +1,8 @@
 package net.apostasy.perpetuity.registry;
 
 import net.apostasy.perpetuity.Perpetuity;
+import net.apostasy.perpetuity.item.RemnantItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -10,21 +12,27 @@ import net.minecraft.registry.RegistryKeys;
 import java.util.function.Function;
 
 public class ModItems {
-    public static final Item DIAMOND_REMNANT = registerItem("diamond_remnant", Item::new);
+    public static final RemnantItem REMNANT = registerItem(
+            "remnant",
+            RemnantItem::new,
+            RemnantItem.SETTINGS
+    );
 
-    private static Item registerItem(String name, Function<Item.Settings, Item> function) {
-        return Registry.register(Registries.ITEM, Perpetuity.id(name),
-                function.apply(new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Perpetuity.id(name)))));
+    public static <I extends Item> I registerItem(String name, Function<Item.Settings, I> itemFactory, Item.Settings settings) {
+        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Perpetuity.id(name));
+        I item = itemFactory.apply(settings.registryKey(itemKey));
+        Registry.register(Registries.ITEM, itemKey, item);
+        return item;
     }
 
-    private static Item registerCustomItem(String name, Function<Item.Settings, Item> factory, Item.Settings itemSettings) {
-        RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, Perpetuity.id(name));
-        Item item = factory.apply(itemSettings.registryKey(key));
-        return Registry.register(Registries.ITEM, key, item);
+    public static <I extends BlockItem> I registerBlockItem(String name, Function<Item.Settings, I> itemFactory, Item.Settings settings) {
+        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Perpetuity.id(name));
+        I item = itemFactory.apply(settings.registryKey(itemKey).useBlockPrefixedTranslationKey());
+        Registry.register(Registries.ITEM, itemKey, item);
+        return item;
     }
 
-    public static void registerModItems() {
-        Perpetuity.LOGGER.info(Perpetuity.MOD_ID + " || Registering ModItems");
-    }
+    public static void init() {
 
+    }
 }

@@ -19,6 +19,6 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(ModItems.DIAMOND_REMNANT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.REMNANT, Models.GENERATED);
     }
 }

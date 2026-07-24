@@ -1,5 +1,6 @@
 package net.apostasy.perpetuity;
 
+import net.apostasy.perpetuity.component.PerpetuityDataComponents;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.apostasy.perpetuity.remnant.RemnantDataCollector;
 import net.fabricmc.api.ModInitializer;
@@ -17,7 +18,8 @@ public class Perpetuity implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModItems.registerModItems();
+		ModItems.init();
+		PerpetuityDataComponents.init();
 		ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(id("remnant_data"), new RemnantDataCollector());
 	}
 
