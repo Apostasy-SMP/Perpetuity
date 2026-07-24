@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cake",
+  "textures": {
+    "bottom": "perpetuity:block/experience_cake_bottom",
+    "particle": "perpetuity:block/experience_cake_side",
+    "side": "perpetuity:block/experience_cake_side",
+    "top": "perpetuity:block/experience_cake_top"
+  }
+}

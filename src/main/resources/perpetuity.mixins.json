@@ -10,5 +10,11 @@
   },
   "overwrites": {
     "requireAnnotations": true
-	}
+  },
+  "client": [
+    "client.BakedModelManagerMixin",
+    "client.ClientPlayNetworkHandlerMixin",
+    "client.ItemAssetsLoaderMixin",
+    "client.ItemModelManagerMixin"
+  ]
 }

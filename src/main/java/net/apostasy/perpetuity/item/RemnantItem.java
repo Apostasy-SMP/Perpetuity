@@ -1,12 +1,16 @@
 package net.apostasy.perpetuity.item;
 
-import net.apostasy.perpetuity.component.PerpetuityDataComponents;
+import net.apostasy.perpetuity.Perpetuity;
+import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.apostasy.perpetuity.remnant.RemnantData;
 import net.apostasy.perpetuity.remnant.RemnantDataCollector;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class RemnantItem extends Item {
@@ -24,10 +28,31 @@ public class RemnantItem extends Item {
         if (data == null) return null;
 
         ItemStack returnStack = new ItemStack(ModItems.REMNANT);
-        returnStack.set(PerpetuityDataComponents.REMNANT, new RemnantComponent(
+        returnStack.set(ModDataComponents.REMNANT, new RemnantComponent(
                 stack.copy(),
-                data.texture()
+                data
         ));
+        returnStack.set(DataComponentTypes.ITEM_MODEL, remnantId);
         return returnStack;
+    }
+
+    public static ItemStack repair(ItemStack stack, PlayerEntity player, float percentageRepaired) {
+        percentageRepaired = Math.clamp(percentageRepaired, 0.0F, 1.0F);
+        RemnantComponent component = stack.get(ModDataComponents.REMNANT);
+        if (component == null) return null;
+        ItemStack returnStack = component.item();
+        returnStack.setDamage(Math.clamp((int) (returnStack.getMaxDamage() * (1 - percentageRepaired)), 0, returnStack.getMaxDamage()));
+
+        int slot = player.getInventory().getSlotWithStack(stack);
+        player.getInventory().setStack(slot, returnStack);
+
+        return returnStack;
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        RemnantComponent component = stack.get(ModDataComponents.REMNANT);
+        if (component == null) return super.getName(stack);
+        return component.data().name();
     }
 }

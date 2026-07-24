@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/cake_slice2",
+  "textures": {
+    "bottom": "perpetuity:block/experience_cake_bottom",
+    "inside": "perpetuity:block/experience_cake_inner",
+    "particle": "perpetuity:block/experience_cake_side",
+    "side": "perpetuity:block/experience_cake_side",
+    "top": "perpetuity:block/experience_cake_top"
+  }
+}

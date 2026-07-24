@@ -1,0 +1,10 @@
+{
+  "name": "item.remnant.lapis",
+  "texture": "perpetuity:item/lapis_remnant",
+  "repair_items": [
+    "minecraft:lapis_lazuli"
+  ],
+  "items": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "item.remnant.lapis",
+  "texture": "perpetuity:item/experience_remnant",
+  "repair_items": [
+    "minecraft:experience_bottle"
+  ],
+  "items": [
+
+  ]
+}

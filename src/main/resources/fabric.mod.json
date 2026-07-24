@@ -3,9 +3,10 @@
 	"id": "perpetuity",
 	"version": "${version}",
 	"name": "Perpetuity",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "General changes for Apostasy SMP S2",
 	"authors": [
-		"Me!"
+		"AussieBox",
+		"Searchies"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -17,6 +18,9 @@
 	"entrypoints": {
 		"main": [
 			"net.apostasy.perpetuity.Perpetuity"
+		],
+		"client": [
+			"net.apostasy.perpetuity.client.PerpetuityClient"
 		],
 		"fabric-datagen": [
 			"net.apostasy.perpetuity.PerpetuityDataGenerator"

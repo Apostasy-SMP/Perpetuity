@@ -1,0 +1,32 @@
+{
+  "parent": "perpetuity:root",
+  "criteria": {
+    "granted_in_code": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "frame": "task",
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.perpetuity.obtain_remnant.description"
+    },
+    "icon": {
+      "components": {
+        "minecraft:item_model": "perpetuity:diamond_remnant"
+      },
+      "count": 1,
+      "id": "perpetuity:remnant"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.perpetuity.obtain_remnant.title"
+    },
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "granted_in_code"
+    ]
+  ]
+}

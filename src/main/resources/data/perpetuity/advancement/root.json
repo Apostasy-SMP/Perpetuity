@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "frame": "task",
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "description": {
+      "translate": "advancements.perpetuity.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "perpetuity:experience_cake"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.perpetuity.root.title"
+    },
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ]
+}

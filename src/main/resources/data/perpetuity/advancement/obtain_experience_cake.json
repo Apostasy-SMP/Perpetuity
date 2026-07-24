@@ -1,0 +1,29 @@
+{
+  "parent": "perpetuity:root",
+  "criteria": {
+    "granted_in_code": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "frame": "task",
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.perpetuity.obtain_experience_cake.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "perpetuity:experience_cake"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.perpetuity.obtain_experience_cake.title"
+    },
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "granted_in_code"
+    ]
+  ]
+}

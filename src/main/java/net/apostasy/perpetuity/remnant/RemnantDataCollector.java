@@ -89,8 +89,6 @@ public class RemnantDataCollector implements FabricResourceReloader {
 
             remnantTypes.putAll(maps.getKey());
             remnantMappings.putAll(maps.getValue());
-            Perpetuity.LOGGER.info(String.valueOf(remnantTypes));
-            Perpetuity.LOGGER.info(String.valueOf(remnantMappings));
         }, applyExecutor);
     }
 }
