@@ -2,7 +2,6 @@ package net.apostasy.perpetuity.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.apostasy.perpetuity.PerpetuityConstants;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.registry.ModItems;
@@ -10,7 +9,6 @@ import net.minecraft.client.item.ItemModelManager;
 import net.minecraft.client.render.item.ItemRenderState;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.HeldItemContext;
@@ -25,7 +23,6 @@ import java.util.function.Function;
 
 @Mixin(ItemModelManager.class)
 public class ItemModelManagerMixin {
-
     @Shadow
     @Final
     private Function<Identifier, ItemModel> modelGetter;

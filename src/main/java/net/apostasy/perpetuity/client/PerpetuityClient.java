@@ -12,7 +12,7 @@ public class PerpetuityClient implements ClientModInitializer {
             if (client.world == null) return;
             if (client.world.getTime() % 10 == 0) {
                 Identifier id = PerpetuityConstants.GENERIC_REMNANT_PREVIEWS.removeFirst();
-                PerpetuityConstants.GENERIC_REMNANT_PREVIEWS.addLast(id);
+                PerpetuityConstants.GENERIC_REMNANT_PREVIEWS.addLast(id); // who up making their constants anything but constant 🗣️🗣️🔥 ~Aussie
             }
         });
     }
