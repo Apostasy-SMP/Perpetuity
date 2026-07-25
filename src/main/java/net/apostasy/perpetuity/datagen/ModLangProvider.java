@@ -21,6 +21,12 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add("item.remnant.diamond", "Diamond Remnant");
         translationBuilder.add("item.remnant.netherite", "Netherite Remnant");
         translationBuilder.add("item.remnant.experience", "Experience Remnant");
+        translationBuilder.add("item.remnant.trident", "Trident Remnant");
+        translationBuilder.add("item.remnant.mace", "Mace Remnant");
+        translationBuilder.add("item.remnant.bow", "Bow Remnant");
+        translationBuilder.add("item.remnant.crossbow", "Crossbow Remnant");
+        translationBuilder.add("item.remnant.scute", "Scute Remnant");
+        translationBuilder.add("item.remnant.amethyst", "Amethyst Remnant");
 
         translationBuilder.add("block.perpetuity.experience_cake", "Experience Cake");
 
@@ -28,7 +34,12 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add("advancements.perpetuity.root.description", "Welcome to Perpetuity!");
         translationBuilder.add("advancements.perpetuity.obtain_remnant.title", "Gone but Not Forgotten");
         translationBuilder.add("advancements.perpetuity.obtain_remnant.description", "Break an item to get its Remnant");
-        translationBuilder.add("advancements.perpetuity.obtain_experience_cake.title", "That's Crazy");
-        translationBuilder.add("advancements.perpetuity.obtain_experience_cake.description", "Craft.");
+        translationBuilder.add("advancements.perpetuity.experience_cake_repair.title", "That's Crazy.");
+        translationBuilder.add("advancements.perpetuity.experience_cake_repair.description", "Craft.");
+        translationBuilder.add("advancements.perpetuity.remnant_anvil_repair.title", "Back to The Basics");
+        translationBuilder.add("advancements.perpetuity.remnant_anvil_repair.description", "Repair a Remnant the old fashioned way");
+
+        translationBuilder.add("tooltip.remnant.repairs_into", "Repairs into ");
+        translationBuilder.add("tooltip.remnant.preview", "[%1$s] to preview item");
     }
 }

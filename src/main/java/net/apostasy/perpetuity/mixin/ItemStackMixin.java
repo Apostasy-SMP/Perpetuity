@@ -3,7 +3,9 @@ package net.apostasy.perpetuity.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.item.RemnantItem;
+import net.apostasy.perpetuity.util.AdvancementUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,5 +23,6 @@ public abstract class ItemStackMixin {
         }
         int slot = player.getInventory().getSlotWithStack(instance);
         player.getInventory().setStack(slot, newStack);
+        AdvancementUtil.grantAdvancement(player, Perpetuity.id("obtain_remnant"));
     }
 }

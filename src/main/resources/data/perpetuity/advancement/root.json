@@ -7,7 +7,7 @@
   "display": {
     "frame": "task",
     "announce_to_chat": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "background": "minecraft:gui/advancements/backgrounds/adventure",
     "description": {
       "translate": "advancements.perpetuity.root.description"
     },

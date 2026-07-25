@@ -1,0 +1,10 @@
+{
+  "name": "item.remnant.scute",
+  "texture": "perpetuity:item/scute_remnant",
+  "repair_items": [
+    "minecraft:scute"
+  ],
+  "items": [
+    "minecraft:turtle_helmet"
+  ]
+}

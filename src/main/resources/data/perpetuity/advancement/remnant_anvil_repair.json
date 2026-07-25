@@ -1,5 +1,5 @@
 {
-  "parent": "perpetuity:root",
+  "parent": "perpetuity:obtain_remnant",
   "criteria": {
     "granted_in_code": {
       "trigger": "minecraft:impossible"
@@ -9,15 +9,15 @@
     "frame": "task",
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.perpetuity.obtain_experience_cake.description"
+      "translate": "advancements.perpetuity.remnant_anvil_repair.description"
     },
     "icon": {
       "count": 1,
-      "id": "perpetuity:experience_cake"
+      "id": "minecraft:diamond_chestplate"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.perpetuity.obtain_experience_cake.title"
+      "translate": "advancements.perpetuity.remnant_anvil_repair.title"
     },
     "hidden": false
   },

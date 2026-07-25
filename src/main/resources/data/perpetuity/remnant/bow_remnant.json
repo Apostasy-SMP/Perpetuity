@@ -1,0 +1,11 @@
+{
+  "name": "item.remnant.bow",
+  "texture": "perpetuity:item/bow_remnant",
+  "repair_items": [
+    "minecraft:string",
+    "minecraft:stick"
+  ],
+  "items": [
+    "minecraft:bow"
+  ]
+}

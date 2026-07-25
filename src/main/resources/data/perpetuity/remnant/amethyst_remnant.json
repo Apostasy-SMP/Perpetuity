@@ -1,0 +1,10 @@
+{
+  "name": "item.remnant.amethyst",
+  "texture": "perpetuity:item/amethyst_remnant",
+  "repair_items": [
+    "minecraft:amethyst_shard"
+  ],
+  "items": [
+
+  ]
+}

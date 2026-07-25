@@ -1,13 +1,16 @@
 package net.apostasy.perpetuity.block;
 
+import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.item.RemnantItem;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.apostasy.perpetuity.registry.ModStats;
+import net.apostasy.perpetuity.util.AdvancementUtil;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -28,10 +31,11 @@ public class ExperienceCakeBlock extends CakeBlock {
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         Item item = stack.getItem();
         if (stack.isOf(ModItems.REMNANT) && tryRepair(world, pos, state, player).isAccepted()) {
-            RemnantItem.repair(stack, player, 0.1F);
+            RemnantItem.repair(stack, player, 0.14285714285F); // Repair 1/7th of the item
             world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 0.75F, 1.15F);
             world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             player.incrementStat(Stats.USED.getOrCreateStat(item));
+            if (player instanceof ServerPlayerEntity serverPlayer) AdvancementUtil.grantAdvancement(serverPlayer, Perpetuity.id("experience_cake_repair"));
             return ActionResult.SUCCESS;
         } else {
             return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;

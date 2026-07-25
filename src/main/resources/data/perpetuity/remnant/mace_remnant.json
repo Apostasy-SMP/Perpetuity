@@ -1,0 +1,10 @@
+{
+  "name": "item.remnant.mace",
+  "texture": "perpetuity:item/mace_remnant",
+  "repair_items": [
+    "minecraft:breeze_rod"
+  ],
+  "items": [
+    "minecraft:mace"
+  ]
+}

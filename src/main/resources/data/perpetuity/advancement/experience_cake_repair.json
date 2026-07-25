@@ -1,5 +1,5 @@
 {
-  "parent": "perpetuity:root",
+  "parent": "perpetuity:obtain_remnant",
   "criteria": {
     "granted_in_code": {
       "trigger": "minecraft:impossible"
@@ -9,15 +9,15 @@
     "frame": "task",
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.perpetuity.obtain_remnant.description"
+      "translate": "advancements.perpetuity.experience_cake_repair.description"
     },
     "icon": {
       "count": 1,
-      "id": "perpetuity:remnant"
+      "id": "perpetuity:experience_cake"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.perpetuity.obtain_remnant.title"
+      "translate": "advancements.perpetuity.experience_cake_repair.title"
     },
     "hidden": false
   },

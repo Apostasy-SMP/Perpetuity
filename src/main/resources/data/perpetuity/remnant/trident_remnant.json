@@ -1,0 +1,10 @@
+{
+  "name": "item.remnant.trident",
+  "texture": "perpetuity:item/trident_remnant",
+  "repair_items": [
+    "minecraft:prismarine_shard"
+  ],
+  "items": [
+    "minecraft:trident"
+  ]
+}

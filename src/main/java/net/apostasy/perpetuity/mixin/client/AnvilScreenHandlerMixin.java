@@ -3,7 +3,10 @@ package net.apostasy.perpetuity.mixin.client;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
+import net.apostasy.perpetuity.network.GrantAdvancementPayload;
 import net.apostasy.perpetuity.registry.ModItems;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,5 +49,10 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
             ci.cancel();
         } else levelCost.set(0);
+    }
+
+    @Inject(method = "onTakeOutput", at = @At("HEAD"))
+    private void perpetuity$grantRepairAdvancement(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
+        if (input.getStack(0).isOf(ModItems.REMNANT)) ClientPlayNetworking.send(new GrantAdvancementPayload(Perpetuity.id("remnant_anvil_repair")));
     }
 }

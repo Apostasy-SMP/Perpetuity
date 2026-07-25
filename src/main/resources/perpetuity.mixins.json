@@ -3,9 +3,7 @@
   "package": "net.apostasy.perpetuity.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ItemStackMixin",
-    "client.AnvilScreenHandlerMixin",
-    "client.AnvilScreenHandlerMixin$ForgingSlotMixin"
+    "ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -14,8 +12,11 @@
     "requireAnnotations": true
   },
   "client": [
+    "client.AnvilScreenHandlerMixin",
     "client.BakedModelManagerMixin",
     "client.ClientPlayNetworkHandlerMixin",
+    "client.HandledScreenMixin",
+    "client.HandledScreenMixin$KeyBindingAccessor",
     "client.ItemAssetsLoaderMixin",
     "client.ItemModelManagerMixin"
   ]

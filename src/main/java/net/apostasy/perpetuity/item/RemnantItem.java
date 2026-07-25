@@ -27,9 +27,12 @@ public class RemnantItem extends Item {
         RemnantData data = RemnantDataCollector.remnantTypes.getOrDefault(remnantId, null);
         if (data == null) return null;
 
+        ItemStack storedStack = stack.copy();
+        storedStack.set(ModDataComponents.TIMES_BROKEN, storedStack.getOrDefault(ModDataComponents.TIMES_BROKEN, 0) + 1);
+
         ItemStack returnStack = new ItemStack(ModItems.REMNANT);
         returnStack.set(ModDataComponents.REMNANT, new RemnantComponent(
-                stack.copy(),
+                storedStack,
                 data
         ));
         returnStack.set(DataComponentTypes.ITEM_MODEL, remnantId);

@@ -1,0 +1,12 @@
+{
+  "name": "item.remnant.crossbow",
+  "texture": "perpetuity:item/crossbow_remnant",
+  "repair_items": [
+    "minecraft:string",
+    "minecraft:stick",
+    "minecraft:tripwire_hook"
+  ],
+  "items": [
+    "minecraft:crossbow"
+  ]
+}
