@@ -1,0 +1,66 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.renovite_pylon",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "pylon",
+					"pivot": [8, 0, -8],
+					"cubes": [
+						{
+							"origin": [-8, 0, -8],
+							"size": [16, 5, 16],
+							"uv": {
+								"north": {"uv": [24, 42], "uv_size": [16, 5]},
+								"east": {"uv": [24, 47], "uv_size": [16, 5]},
+								"south": {"uv": [40, 50], "uv_size": [16, 5]},
+								"west": {"uv": [52, 0], "uv_size": [16, 5]},
+								"up": {"uv": [0, 0], "uv_size": [16, 16]},
+								"down": {"uv": [0, 32], "uv_size": [16, -16]}
+							}
+						}
+					]
+				},
+				{
+					"name": "pole",
+					"parent": "pylon",
+					"pivot": [0, 18, 0],
+					"cubes": [
+						{
+							"origin": [-6, 4, -6],
+							"size": [12, 14, 12],
+							"uv": {
+								"north": {"uv": [28, 14], "uv_size": [-12, -14], "uv_rotation": 180},
+								"east": {"uv": [16, 14], "uv_size": [12, 14]},
+								"south": {"uv": [28, 0], "uv_size": [12, 14]},
+								"west": {"uv": [28, 14], "uv_size": [12, 14]},
+								"up": {"uv": [40, 14], "uv_size": [12, 12]},
+								"down": {"uv": [40, 38], "uv_size": [12, -12]}
+							}
+						},
+						{
+							"origin": [-6, 18, -6],
+							"size": [12, 14, 12],
+							"uv": {
+								"north": {"uv": [16, 28], "uv_size": [12, 14]},
+								"east": {"uv": [28, 28], "uv_size": [12, 14]},
+								"south": {"uv": [0, 32], "uv_size": [12, 14]},
+								"west": {"uv": [40, 0], "uv_size": [12, 14]},
+								"up": {"uv": [40, 38], "uv_size": [12, 12]},
+								"down": {"uv": [12, 54], "uv_size": [12, -12]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

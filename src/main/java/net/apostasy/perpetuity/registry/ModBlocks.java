@@ -2,6 +2,7 @@ package net.apostasy.perpetuity.registry;
 
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.block.ExperienceCakeBlock;
+import net.apostasy.perpetuity.block.RenovitePylonBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -26,6 +27,19 @@ public class ModBlocks {
                     .sounds(BlockSoundGroup.WOOL)
                     .pistonBehavior(PistonBehavior.DESTROY)
                     .mapColor(MapColor.DARK_GREEN),
+            true
+    );
+
+    public static final Block RENOVITE_PYLON = register(
+            "renovite_pylon",
+            RenovitePylonBlock::new,
+            AbstractBlock.Settings.create()
+                    .solid()
+                    .strength(3.0F)
+                    .sounds(BlockSoundGroup.TUFF)
+                    .pistonBehavior(PistonBehavior.BLOCK)
+                    .mapColor(MapColor.GRAY)
+                    .requiresTool(),
             true
     );
 
