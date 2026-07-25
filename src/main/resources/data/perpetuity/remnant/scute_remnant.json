@@ -6,5 +6,10 @@
   ],
   "items": [
     "minecraft:turtle_helmet"
-  ]
+  ],
+  "append": {
+    "perpetuity:scute_remnant": [
+      "minecraft:turtle_helmet"
+    ]
+  }
 }

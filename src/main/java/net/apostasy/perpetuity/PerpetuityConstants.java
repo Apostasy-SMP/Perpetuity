@@ -13,6 +13,7 @@ public interface PerpetuityConstants {
             Perpetuity.id("lapis_remnant"),
             Perpetuity.id("diamond_remnant"),
             Perpetuity.id("netherite_remnant"),
+            Perpetuity.id("amethyst_remnant"),
             Perpetuity.id("experience_remnant")
     ));
 }
