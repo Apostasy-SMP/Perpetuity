@@ -24,6 +24,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
 import net.minecraft.world.WorldView;
 import org.jspecify.annotations.Nullable;
 
@@ -67,7 +68,15 @@ public class RenovitePylonBlock extends BlockWithEntity {
                 if (blockState.isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.LOWER) {
                     BlockState blockState2 = blockState.getFluidState().isOf(Fluids.WATER) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
                     world.setBlockState(blockPos, blockState2, 35);
-                    world.syncWorldEvent(player, 2001, blockPos, Block.getRawIdFromState(blockState));
+                    world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
+                }
+            } else {
+                BlockPos blockPos = pos.up();
+                BlockState blockState = world.getBlockState(blockPos);
+                if (blockState.isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.UPPER) {
+                    BlockState blockState2 = blockState.getFluidState().isOf(Fluids.WATER) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+                    world.setBlockState(blockPos, blockState2, 35); // ???? wtf does 35 even do???
+                    world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, blockPos, Block.getRawIdFromState(blockState));
                 }
             }
         }
