@@ -14,7 +14,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class RemnantItem extends Item {
-    public static Settings SETTINGS = new Item.Settings();
+    public static Settings SETTINGS = new Item.Settings().maxCount(1);
 
     public RemnantItem(Settings settings) {
         super(settings);

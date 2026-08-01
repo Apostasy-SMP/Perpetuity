@@ -28,10 +28,10 @@ public class RenovitePylonBlockEntity extends BlockEntity implements GeoBlockEnt
         if (world.getTime() % 200 != 0 || entity.lastTick == Math.toIntExact(world.getTime())) return;
         entity.lastTick = Math.toIntExact(world.getTime());
 
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(10), LivingEntity::isAlive).forEach(player -> {
+        world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(5), LivingEntity::isAlive).forEach(player -> {
             player.getInventory().getMainStacks().stream()
                     .filter(ItemStack::isDamaged)
-                    .forEach(stack -> stack.setDamage(stack.getDamage()-1));
+                    .forEach(stack -> stack.setDamage(stack.getDamage()-5));
         });
     }
 

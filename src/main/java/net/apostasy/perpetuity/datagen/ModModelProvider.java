@@ -33,6 +33,7 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator generator) {
 //        generator.register(ModItems.REMNANT, Models.GENERATED); // Unnecessary
         generator.register(ModBlocks.EXPERIENCE_CAKE.asItem(), Models.GENERATED);
+        generator.register(ModBlocks.RENOVITE_PYLON.asItem(), Models.GENERATED);
     }
 
     private static void createCake(Block cakeBlock, BlockStateModelGenerator generator) {

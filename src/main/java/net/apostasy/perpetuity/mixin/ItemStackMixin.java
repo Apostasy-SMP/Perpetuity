@@ -21,8 +21,17 @@ public abstract class ItemStackMixin {
             original.call(instance, amount); // Calls normal stack.decrement(1);
             return;
         }
-        int slot = player.getInventory().getSlotWithStack(instance);
-        player.getInventory().setStack(slot, newStack);
+
+        int newSlot = player.getInventory().getEmptySlot();
+
+        if (newSlot == -1) {
+            player.dropItem(newStack, true, false);
+        } else {
+            player.getInventory().setStack(newSlot, newStack);
+        }
+
+        instance.decrement(1);
+
         AdvancementUtil.grantAdvancement(player, Perpetuity.id("obtain_remnant"));
     }
 }
