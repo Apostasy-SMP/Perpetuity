@@ -29,6 +29,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add("item.remnant.amethyst", "Amethyst Remnant");
 
         translationBuilder.add("block.perpetuity.experience_cake", "Experience Cake");
+        translationBuilder.add("block.perpetuity.renovite_pylon", "Renovite Pylon");
 
         translationBuilder.add("advancements.perpetuity.root.title", "Perpetuity");
         translationBuilder.add("advancements.perpetuity.root.description", "Welcome to Perpetuity!");
