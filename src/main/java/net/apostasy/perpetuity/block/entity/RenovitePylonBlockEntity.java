@@ -31,7 +31,7 @@ public class RenovitePylonBlockEntity extends BlockEntity implements GeoBlockEnt
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(5), LivingEntity::isAlive).forEach(player -> {
             player.getInventory().getMainStacks().stream()
                     .filter(ItemStack::isDamaged)
-                    .forEach(stack -> stack.setDamage(stack.getDamage()-5));
+                    .forEach(stack -> stack.setDamage(stack.getDamage() - 5));
         });
     }
 

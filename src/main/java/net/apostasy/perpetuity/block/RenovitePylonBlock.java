@@ -98,7 +98,7 @@ public class RenovitePylonBlock extends BlockWithEntity {
 
     @Override
     protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return true;
+        return world.getBlockState(pos.up()).isReplaceable();
     }
 
     @Override

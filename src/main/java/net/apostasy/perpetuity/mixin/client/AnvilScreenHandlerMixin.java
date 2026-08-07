@@ -42,7 +42,15 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
         if (component.data().resources().contains(stack2.getItem())) {
             ItemStack stack = component.item().copy();
-            stack.setDamage(0);
+            stack.setDamage(stack.getMaxDamage()/10*9); // Repair with 10% of durability
+
+            output.setStack(0, stack);
+            sendContentUpdates();
+
+            ci.cancel();
+        } else if (stack2.isOf(ModItems.RENOVITE)) {
+            ItemStack stack = component.item().copy();
+            stack.setDamage(stack.getMaxDamage()/2); // Repair with 50% of durability
 
             output.setStack(0, stack);
             sendContentUpdates();

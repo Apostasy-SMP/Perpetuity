@@ -12,4 +12,9 @@ public class RenovitePylonRenderer extends GeoBlockRenderer<RenovitePylonBlockEn
         super(new DefaultedBlockGeoModel<>(Perpetuity.id("renovite_pylon")));
         this.withRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
+
+    @Override
+    public boolean rendersOutsideBoundingBox() {
+        return true;
+    }
 }

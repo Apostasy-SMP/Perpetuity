@@ -116,7 +116,6 @@ public class RemnantDataCollector implements FabricResourceReloader {
                     .filter(entry -> !remnantMappings.containsKey(entry.getKey()))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-            Perpetuity.LOGGER.info(String.valueOf(remnantMappings));
             if (typeFails > 0) Perpetuity.LOGGER.warn("Failed to append {} items to non-existent remnant types", (int) typeFails);
             if (mappingFails > 0) Perpetuity.LOGGER.warn("Failed to append {} items to remnant types as they were already mapped", (int) mappingFails);
         }, applyExecutor);

@@ -1,0 +1,6 @@
+classTweaker v1 named
+
+transitive-accessible class net/minecraft/client/render/model/ReferencedModelsCollector$Holder
+transitive-accessible method net/minecraft/client/render/model/ReferencedModelsCollector$Holder <init> (Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/model/UnbakedModel;Z)V
+
+## Please don't touch this, it allows for certain things to be public when they shouldn't be :3 ~Aussie

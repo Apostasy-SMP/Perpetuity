@@ -1,6 +1,9 @@
 // 1.21.11	-999999999-01-01T00:00:00	Perpetuity/Model Definitions
 3466fc387631fe7aee6e14c91fef2d992ca13d7d assets/perpetuity/blockstates/experience_cake.json
+dd778b214f90841f904b5b60337a981ed5a4fb3a assets/perpetuity/blockstates/renovite_block.json
 dbed7b02b88abf4417399fc0d6e6eb39aa74fd64 assets/perpetuity/items/experience_cake.json
+d9de5ad973295950ca93085bad9e235c4f4f5a78 assets/perpetuity/items/renovite.json
+2ff739576a76dec80fc485a368ae35e4585bf5d5 assets/perpetuity/items/renovite_block.json
 38bc40cb13b7b55ea63e7cda169107103d76b9a9 assets/perpetuity/items/renovite_pylon.json
 1dca1f9208ae0f3866b512277e53fd22e21fdb96 assets/perpetuity/models/block/experience_cake.json
 5eb27929c596dec86db3c04cf300bf5580f549ad assets/perpetuity/models/block/experience_cake_slice1.json
@@ -9,5 +12,7 @@ a3a8de98b053c2b562ae456f9f138e76dc533702 assets/perpetuity/models/block/experien
 c0393405c63b9899883c2cf0eae27ba3c93e05cb assets/perpetuity/models/block/experience_cake_slice4.json
 64ad100f46eeddd4ec6468c7446cefa9ff29d6ba assets/perpetuity/models/block/experience_cake_slice5.json
 05705c735f97acf66c43a30ec4c3a264dce4fbde assets/perpetuity/models/block/experience_cake_slice6.json
+d2bc455faa9bacfd040360ec9879d15623c9e186 assets/perpetuity/models/block/renovite_block.json
 e5e94199ffa47773b89abcac9fcc2fd49da8d514 assets/perpetuity/models/item/experience_cake.json
+15126dbca50996a99a5bfb5ae7c7773697923f95 assets/perpetuity/models/item/renovite.json
 01c083f3f55d5b3a2f3eb981ee08f8c7ecf5b998 assets/perpetuity/models/item/renovite_pylon.json

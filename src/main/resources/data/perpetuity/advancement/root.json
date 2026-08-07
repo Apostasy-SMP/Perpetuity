@@ -7,13 +7,13 @@
   "display": {
     "frame": "task",
     "announce_to_chat": false,
-    "background": "minecraft:gui/advancements/backgrounds/adventure",
+    "background": "perpetuity:block/renovite_block",
     "description": {
       "translate": "advancements.perpetuity.root.description"
     },
     "icon": {
       "count": 1,
-      "id": "perpetuity:experience_cake"
+      "id": "perpetuity:renovite"
     },
     "show_toast": false,
     "title": {

@@ -18,6 +18,12 @@ public class ModItems {
             RemnantItem.SETTINGS
     );
 
+    public static final Item RENOVITE = registerItem(
+            "renovite",
+            Item::new,
+            new Item.Settings()
+    );
+
     public static <I extends Item> I registerItem(String name, Function<Item.Settings, I> itemFactory, Item.Settings settings) {
         RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Perpetuity.id(name));
         I item = itemFactory.apply(settings.registryKey(itemKey));

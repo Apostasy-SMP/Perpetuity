@@ -27,6 +27,7 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
         createCake(ModBlocks.EXPERIENCE_CAKE, generator);
+        generator.registerCubeAllModelTexturePool(ModBlocks.RENOVITE_BLOCK);
     }
 
     @Override
@@ -34,6 +35,7 @@ public class ModModelProvider extends FabricModelProvider {
 //        generator.register(ModItems.REMNANT, Models.GENERATED); // Unnecessary
         generator.register(ModBlocks.EXPERIENCE_CAKE.asItem(), Models.GENERATED);
         generator.register(ModBlocks.RENOVITE_PYLON.asItem(), Models.GENERATED);
+        generator.register(ModItems.RENOVITE, Models.GENERATED);
     }
 
     private static void createCake(Block cakeBlock, BlockStateModelGenerator generator) {

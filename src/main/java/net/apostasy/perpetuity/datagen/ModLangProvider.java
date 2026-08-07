@@ -3,6 +3,7 @@ package net.apostasy.perpetuity.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -12,7 +13,7 @@ public class ModLangProvider extends FabricLanguageProvider {
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
+    public void generateTranslations(RegistryWrapper.@NonNull WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("item.perpetuity.remnant", "Remnant"); // Generic name in case something goes wrong :c
         translationBuilder.add("item.remnant.copper", "Copper Remnant");
         translationBuilder.add("item.remnant.iron", "Iron Remnant");
@@ -28,8 +29,11 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add("item.remnant.scute", "Scute Remnant");
         translationBuilder.add("item.remnant.amethyst", "Amethyst Remnant");
 
+        translationBuilder.add("item.perpetuity.renovite", "Renovite");
+
         translationBuilder.add("block.perpetuity.experience_cake", "Experience Cake");
         translationBuilder.add("block.perpetuity.renovite_pylon", "Renovite Pylon");
+        translationBuilder.add("block.perpetuity.renovite_block", "Renovite Block");
 
         translationBuilder.add("advancements.perpetuity.root.title", "Perpetuity");
         translationBuilder.add("advancements.perpetuity.root.description", "Welcome to Perpetuity!");
@@ -42,5 +46,6 @@ public class ModLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add("tooltip.remnant.repairs_into", "Repairs into ");
         translationBuilder.add("tooltip.remnant.preview", "[%1$s] to preview item");
+        translationBuilder.add("tooltip.tool.times_broken", "Broken %1$s times");
     }
 }

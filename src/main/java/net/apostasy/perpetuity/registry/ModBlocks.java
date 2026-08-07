@@ -40,6 +40,18 @@ public class ModBlocks {
                     .pistonBehavior(PistonBehavior.BLOCK)
                     .mapColor(MapColor.GRAY)
                     .requiresTool(),
+            1
+    );
+
+    public static final Block RENOVITE_BLOCK = register(
+            "renovite_block",
+            Block::new,
+            AbstractBlock.Settings.create()
+                    .solid()
+                    .strength(3.0F)
+                    .sounds(BlockSoundGroup.TUFF)
+                    .mapColor(MapColor.GRAY)
+                    .requiresTool(),
             true
     );
 
@@ -53,6 +65,18 @@ public class ModBlocks {
             BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey).useBlockPrefixedTranslationKey());
             Registry.register(Registries.ITEM, itemKey, blockItem);
         }
+
+        return Registry.register(Registries.BLOCK, blockKey, block);
+    }
+
+    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, int stackSize) {
+        RegistryKey<Block> blockKey = keyOfBlock(name);
+        Block block = blockFactory.apply(settings.registryKey(blockKey));
+
+        RegistryKey<Item> itemKey = keyOfItem(name);
+
+        BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey).useBlockPrefixedTranslationKey().maxCount(stackSize));
+        Registry.register(Registries.ITEM, itemKey, blockItem);
 
         return Registry.register(Registries.BLOCK, blockKey, block);
     }

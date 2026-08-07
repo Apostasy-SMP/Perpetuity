@@ -13,16 +13,13 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 	maven {
-		name = 'GeckoLib'
+		name 'GeckoLib'
 		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
 		content {
 			includeGroup("software.bernie.geckolib")
 		}
 	}
-	maven {
-		name = "RiftRealms"
-		url = "https://maven.riftrealms.de/releases"
-	}
+	maven { url "https://maven.shedaniel.me/" }
 }
 
 fabricApi {
@@ -46,6 +43,8 @@ loom {
 			runDir "run"
 		}
 	}
+
+	accessWidenerPath = project.file("src/main/resources/perpetuity.classtweaker")
 }
 
 dependencies {
@@ -58,7 +57,11 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${project.geckolib_version}"
-	modImplementation "de.nexusrealms:nebulon:0.1.0-beta+mc1.21.11.20260715.10"
+
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 }
 
 processResources {

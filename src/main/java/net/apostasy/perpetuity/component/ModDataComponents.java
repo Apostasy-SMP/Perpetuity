@@ -3,6 +3,7 @@ package net.apostasy.perpetuity.component;
 import com.mojang.serialization.Codec;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
+import net.apostasy.perpetuity.component.util.ToolInfoComponent;
 import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
@@ -20,9 +21,9 @@ public class ModDataComponents {
             builder -> builder.codec(RemnantComponent.CODEC)
     );
 
-    public static final ComponentType<Integer> TIMES_BROKEN = register(
-            "times_broken",
-            builder -> builder.codec(Codec.INT)
+    public static final ComponentType<ToolInfoComponent> TOOL_INFO = register(
+            "tool_info",
+            builder -> builder.codec(ToolInfoComponent.CODEC)
     );
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {

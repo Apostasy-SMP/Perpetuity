@@ -3,6 +3,7 @@ package net.apostasy.perpetuity.item;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
+import net.apostasy.perpetuity.component.util.ToolInfoComponent;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.apostasy.perpetuity.remnant.RemnantData;
 import net.apostasy.perpetuity.remnant.RemnantDataCollector;
@@ -28,7 +29,8 @@ public class RemnantItem extends Item {
         if (data == null) return null;
 
         ItemStack storedStack = stack.copy();
-        storedStack.set(ModDataComponents.TIMES_BROKEN, storedStack.getOrDefault(ModDataComponents.TIMES_BROKEN, 0) + 1);
+        ToolInfoComponent toolInfo = storedStack.getOrDefault(ModDataComponents.TOOL_INFO, new ToolInfoComponent(0));
+        storedStack.set(ModDataComponents.TOOL_INFO, new ToolInfoComponent(toolInfo.timesBroken() + 1));
 
         ItemStack returnStack = new ItemStack(ModItems.REMNANT);
         returnStack.set(ModDataComponents.REMNANT, new RemnantComponent(

@@ -8,8 +8,10 @@
   "advancements.perpetuity.root.description": "Welcome to Perpetuity!",
   "advancements.perpetuity.root.title": "Perpetuity",
   "block.perpetuity.experience_cake": "Experience Cake",
+  "block.perpetuity.renovite_block": "Renovite Block",
   "block.perpetuity.renovite_pylon": "Renovite Pylon",
   "item.perpetuity.remnant": "Remnant",
+  "item.perpetuity.renovite": "Renovite",
   "item.remnant.amethyst": "Amethyst Remnant",
   "item.remnant.bow": "Bow Remnant",
   "item.remnant.copper": "Copper Remnant",
@@ -24,5 +26,6 @@
   "item.remnant.scute": "Scute Remnant",
   "item.remnant.trident": "Trident Remnant",
   "tooltip.remnant.preview": "[%1$s] to preview item",
-  "tooltip.remnant.repairs_into": "Repairs into "
+  "tooltip.remnant.repairs_into": "Repairs into ",
+  "tooltip.tool.times_broken": "Broken %1$s times"
 }
