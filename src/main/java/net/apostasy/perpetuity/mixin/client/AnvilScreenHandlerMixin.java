@@ -5,6 +5,8 @@ import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
 import net.apostasy.perpetuity.network.GrantAdvancementPayload;
 import net.apostasy.perpetuity.registry.ModItems;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Environment(EnvType.CLIENT)
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     @Shadow
@@ -61,6 +64,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
     @Inject(method = "onTakeOutput", at = @At("HEAD"))
     private void perpetuity$grantRepairAdvancement(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
-        if (input.getStack(0).isOf(ModItems.REMNANT)) ClientPlayNetworking.send(new GrantAdvancementPayload(Perpetuity.id("remnant_anvil_repair")));
+        if (input.getStack(0).isOf(ModItems.REMNANT)) ClientPlayNetworking.send(new GrantAdvancementPayload(Perpetuity.id("remnant_anvil_repair"), player.getUuid()));
     }
 }

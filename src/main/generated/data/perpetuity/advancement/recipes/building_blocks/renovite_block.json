@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_renovite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "perpetuity:renovite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "perpetuity:renovite_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_renovite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "perpetuity:renovite_block"
+    ]
+  }
+}

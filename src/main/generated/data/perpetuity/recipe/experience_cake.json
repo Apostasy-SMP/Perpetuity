@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": "minecraft:experience_bottle",
+    "G": "#minecraft:eggs",
+    "S": "minecraft:sugar",
+    "W": "minecraft:wheat"
+  },
+  "pattern": [
+    "EEE",
+    "SGS",
+    "WWW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "perpetuity:experience_cake"
+  }
+}

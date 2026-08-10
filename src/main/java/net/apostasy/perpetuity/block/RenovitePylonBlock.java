@@ -61,7 +61,7 @@ public class RenovitePylonBlock extends BlockWithEntity {
 
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        if (!world.isClient() && (player.shouldSkipBlockDrops() || !player.canHarvest(state))) {
+        if (!world.isClient()) {
             if (state.get(HALF) == DoubleBlockHalf.UPPER) {
                 BlockPos blockPos = pos.down();
                 BlockState blockState = world.getBlockState(blockPos);

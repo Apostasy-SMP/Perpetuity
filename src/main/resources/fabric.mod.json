@@ -3,7 +3,7 @@
 	"id": "perpetuity",
 	"version": "${version}",
 	"name": "Perpetuity",
-	"description": "Broken Items now turn into Remnants!",
+	"description": "Many durability, experience, and enchantment-related changes and additions! Created for Apostasy SMP S2 :3",
 	"authors": [
 		"AussieBox",
 		"Searchies"
@@ -24,6 +24,9 @@
 		],
 		"fabric-datagen": [
 			"net.apostasy.perpetuity.PerpetuityDataGenerator"
+		],
+		"jei_mod_plugin": [
+			"net.apostasy.perpetuity.jei.PerpetuityJeiPlugin"
 		]
 	},
 	"mixins": [

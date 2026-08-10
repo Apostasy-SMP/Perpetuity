@@ -15,12 +15,10 @@
   "client": [
     "client.AnvilScreenHandlerMixin",
     "client.BakedModelManagerMixin",
-    "client.BakedModelManagerMixin$BasicItemModelAccessor",
-    "client.BakedModelManagerMixin$ReferencedModelsCollectorAccessor",
-    "client.ClientPlayNetworkHandlerMixin",
     "client.HandledScreenMixin",
     "client.HandledScreenMixin$KeyBindingAccessor",
-    "client.ItemAssetsLoaderMixin",
-    "client.ItemModelManagerMixin"
+    "client.ItemModelManagerMixin",
+    "client.ItemModelManagerMixin$BasicItemModelAccessor",
+    "client.ItemModelManagerMixin$ReferencedModelsCollectorAccessor"
   ]
 }

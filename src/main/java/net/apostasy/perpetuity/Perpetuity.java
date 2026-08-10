@@ -22,6 +22,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.ResourceType;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
@@ -43,7 +44,10 @@ public class Perpetuity implements ModInitializer {
 		ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(id("remnant_data"), new RemnantDataCollector());
 
 		PayloadTypeRegistry.playC2S().register(GrantAdvancementPayload.ID, GrantAdvancementPayload.PACKET_CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(GrantAdvancementPayload.ID, (payload, context) -> AdvancementUtil.grantAdvancement(context.player(), payload.advancement()));
+		ServerPlayNetworking.registerGlobalReceiver(GrantAdvancementPayload.ID, (payload, context) -> {
+			ServerPlayerEntity player = context.server().getPlayerManager().getPlayer(payload.player());
+			if (player != null) AdvancementUtil.grantAdvancement(player, payload.advancement());
+		});
 	}
 
 	public static Identifier id(String path) {

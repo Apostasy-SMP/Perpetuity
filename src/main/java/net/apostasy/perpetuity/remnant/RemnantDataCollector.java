@@ -66,7 +66,7 @@ public class RemnantDataCollector implements FabricResourceReloader {
                             repairItems.add(item);
                         });
 
-                        tempTypes.put(id, new RemnantData(repairItems, Text.translatable(jsonObject.get("name").getAsString()), Identifier.of(jsonObject.get("texture").getAsString())));
+                        tempTypes.put(id, new RemnantData(repairItems, Text.translatable(jsonObject.get("name").getAsString()), Identifier.of(jsonObject.get("texture").getAsString()), id));
 
                         if (jsonObject.get("items") == null || !jsonObject.get("items").isJsonArray()) {
                             Perpetuity.LOGGER.warn("Remnant data at {} does not contain items list, ignoring", entry.getKey().toString());

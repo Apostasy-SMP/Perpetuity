@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -26,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.List;
 import java.util.Optional;
 
+@Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
 public abstract class HandledScreenMixin {
     @Shadow

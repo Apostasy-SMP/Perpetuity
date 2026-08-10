@@ -1,1 +1,11 @@
 // 1.21.11	-999999999-01-01T00:00:00	Perpetuity/recipes
+007214fc0d7be142b5dc702aaab6125c8b00495c data/perpetuity/advancement/recipes/building_blocks/renovite_block.json
+d49afc71c3c320c2590f4fd10230179a51a49de3 data/perpetuity/advancement/recipes/food/experience_cake.json
+ce3136b2737237dd1875b4156885b1076d258872 data/perpetuity/advancement/recipes/misc/from_block.json
+ed83fae3df6e3ef1a68a792847dfb445923b9f12 data/perpetuity/advancement/recipes/misc/renovite_pylon.json
+da637b0484132ac01f1f40b0e47e9da9c7a0b778 data/perpetuity/advancement/recipes/tools/renovite.json
+4738b012460864c388f9a5a573ff14336f93768e data/perpetuity/recipe/experience_cake.json
+36e714bd2af9c6087c626d9dd03f3cf7f04fdfc0 data/perpetuity/recipe/from_block.json
+64186f8ab14d8639c4928f22e12629fe08e95dac data/perpetuity/recipe/renovite.json
+dc012708483858e4ae9af2e975128024042f65f0 data/perpetuity/recipe/renovite_block.json
+f2ca742141d4a0729210a80d2875db7604868583 data/perpetuity/recipe/renovite_pylon.json

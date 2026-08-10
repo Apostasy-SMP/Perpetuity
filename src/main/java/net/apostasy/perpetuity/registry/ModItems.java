@@ -2,12 +2,17 @@ package net.apostasy.perpetuity.registry;
 
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.item.RemnantItem;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 
 import java.util.function.Function;
 
@@ -38,7 +43,19 @@ public class ModItems {
         return item;
     }
 
-    public static void init() {
+    public static final ItemGroup GROUP = FabricItemGroup.builder()
+            .icon(REMNANT::getDefaultStack)
+            .displayName(Text.translatable("itemGroup.perpetuity.perpetuity"))
+            .build();
 
+    public static void init() {
+        Registry.register(Registries.ITEM_GROUP, Perpetuity.id(Perpetuity.MOD_ID), GROUP);
+        ItemGroupEvents.modifyEntriesEvent(RegistryKey.of(RegistryKeys.ITEM_GROUP, Perpetuity.id(Perpetuity.MOD_ID))).register(group -> {
+            group.add(RENOVITE);
+            group.add(ModBlocks.RENOVITE_BLOCK.asItem());
+            group.add(ModBlocks.RENOVITE_PYLON.asItem());
+            group.add(REMNANT);
+            group.add(ModBlocks.EXPERIENCE_CAKE.asItem());
+        });
     }
 }

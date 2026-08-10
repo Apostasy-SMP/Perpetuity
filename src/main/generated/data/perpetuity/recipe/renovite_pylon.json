@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:amethyst_block",
+    "D": "minecraft:polished_deepslate_slab",
+    "R": "perpetuity:renovite_block"
+  },
+  "pattern": [
+    " R ",
+    " R ",
+    "DAD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "perpetuity:renovite_pylon"
+  }
+}

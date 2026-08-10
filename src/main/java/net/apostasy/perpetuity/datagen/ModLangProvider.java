@@ -14,6 +14,8 @@ public class ModLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.@NonNull WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
+        translationBuilder.add("itemGroup.perpetuity.perpetuity", "Perpetuity");
+
         translationBuilder.add("item.perpetuity.remnant", "Remnant"); // Generic name in case something goes wrong :c
         translationBuilder.add("item.remnant.copper", "Copper Remnant");
         translationBuilder.add("item.remnant.iron", "Iron Remnant");

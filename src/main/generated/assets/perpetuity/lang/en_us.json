@@ -25,6 +25,7 @@
   "item.remnant.netherite": "Netherite Remnant",
   "item.remnant.scute": "Scute Remnant",
   "item.remnant.trident": "Trident Remnant",
+  "itemGroup.perpetuity.perpetuity": "Perpetuity",
   "tooltip.remnant.preview": "[%1$s] to preview item",
   "tooltip.remnant.repairs_into": "Repairs into ",
   "tooltip.tool.times_broken": "Broken %1$s times"

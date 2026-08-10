@@ -20,10 +20,11 @@ import net.minecraft.util.Colors;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.IntProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-public record RemnantComponent(ItemStack item, RemnantData data) implements TooltipAppender {
+public record RemnantComponent(@NotNull ItemStack item, @NotNull RemnantData data) implements TooltipAppender {
     public static final Codec<RemnantComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ItemStack.CODEC.fieldOf("item").forGetter(RemnantComponent::item),
             RemnantData.CODEC.fieldOf("data").forGetter(RemnantComponent::data)
@@ -31,6 +32,7 @@ public record RemnantComponent(ItemStack item, RemnantData data) implements Tool
 
     @Override
     public void appendTooltip(Item.TooltipContext context, Consumer<Text> list, TooltipType type, ComponentsAccess components) {
+        if (item.isEmpty()) return;
         list.accept(Text.translatable("tooltip.remnant.repairs_into").formatted(Formatting.GRAY).append(item.getFormattedName()));
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             Text bindKeyName = PerpetuityClient.getSneakKeyName();

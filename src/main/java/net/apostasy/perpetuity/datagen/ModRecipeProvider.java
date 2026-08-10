@@ -31,20 +31,28 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("DAD")
                         .input('D', Blocks.POLISHED_DEEPSLATE_SLAB)
                         .input('A', Blocks.AMETHYST_BLOCK)
-                        .input('R', ModBlocks.RENOVITE_BLOCK);
+                        .input('R', ModBlocks.RENOVITE_BLOCK)
+                        .criterion(hasItem(ModBlocks.RENOVITE_BLOCK), conditionsFromItem(ModBlocks.RENOVITE_BLOCK))
+                        .offerTo(exporter);
 
                 createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.RENOVITE_BLOCK)
                         .pattern("RRR")
                         .pattern("RRR")
                         .pattern("RRR")
-                        .input('R', ModItems.RENOVITE);
+                        .input('R', ModItems.RENOVITE)
+                        .criterion(hasItem(ModItems.RENOVITE), conditionsFromItem(ModItems.RENOVITE))
+                        .offerTo(exporter);
 
                 createShapeless(RecipeCategory.TOOLS, ModItems.RENOVITE)
                         .input(Blocks.AMETHYST_CLUSTER)
-                        .input(Items.EXPERIENCE_BOTTLE, 4);
+                        .input(Items.EXPERIENCE_BOTTLE, 4)
+                        .criterion(hasItem(Items.AMETHYST_CLUSTER), conditionsFromItem(Items.AMETHYST_CLUSTER))
+                        .offerTo(exporter);
 
                 createShapeless(RecipeCategory.MISC, ModItems.RENOVITE, 9)
-                        .input(ModBlocks.RENOVITE_BLOCK);
+                        .input(ModBlocks.RENOVITE_BLOCK)
+                        .criterion(hasItem(ModBlocks.RENOVITE_BLOCK), conditionsFromItem(ModBlocks.RENOVITE_BLOCK))
+                        .offerTo(exporter, "from_block");
 
                 createShaped(RecipeCategory.FOOD, ModBlocks.EXPERIENCE_CAKE)
                         .pattern("EEE")
@@ -53,7 +61,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .input('E', Items.EXPERIENCE_BOTTLE)
                         .input('S', Items.SUGAR)
                         .input('W', Items.WHEAT)
-                        .input('G', ItemTags.EGGS);
+                        .input('G', ItemTags.EGGS)
+                        .criterion(hasItem(Items.EXPERIENCE_BOTTLE), conditionsFromItem(Items.EXPERIENCE_BOTTLE))
+                        .offerTo(exporter);
             }
         };
     }
