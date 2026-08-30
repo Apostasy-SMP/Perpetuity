@@ -23,6 +23,10 @@ repositories {
 		name = "Jared's maven"
 		url = "https://maven.blamejared.com/"
 	}
+	maven {
+		name = "RiftRealms"
+		url = "https://maven.riftrealms.de/releases"
+	}
 }
 
 fabricApi {
@@ -66,6 +70,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${project.geckolib_version}"
+
+	modImplementation "de.nexusrealms:nebulon:${project.nebulon_version}"
 
 	modCompileOnlyApi "mezz.jei:jei-${project.minecraft_version}-fabric-api:${project.jei_version}"
 	modRuntimeOnly "mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}"

@@ -6,6 +6,7 @@ import net.apostasy.perpetuity.registry.ModBlockEntities;
 import net.apostasy.perpetuity.registry.ModBlocks;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.apostasy.perpetuity.registry.ModStats;
+import net.apostasy.perpetuity.registry.ModWorldGen;
 import net.apostasy.perpetuity.remnant.RemnantDataCollector;
 import net.apostasy.perpetuity.util.AdvancementUtil;
 import net.fabricmc.api.ModInitializer;
@@ -41,6 +42,7 @@ public class Perpetuity implements ModInitializer {
 		ModBlocks.init();
 		ModStats.init();
 		ModBlockEntities.init();
+		ModWorldGen.init();
 		ResourceLoader.get(ResourceType.SERVER_DATA).registerReloader(id("remnant_data"), new RemnantDataCollector());
 
 		PayloadTypeRegistry.playC2S().register(GrantAdvancementPayload.ID, GrantAdvancementPayload.PACKET_CODEC);

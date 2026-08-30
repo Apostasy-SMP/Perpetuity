@@ -37,6 +37,7 @@
 		"minecraft": "~${minecraft_version}",
 		"java": ">=21",
 		"fabric-api": "*",
-		"geckolib": ">=${geckolib_version}"
+		"geckolib": ">=${geckolib_version}",
+		"nebulon": "*"
 	}
 }
