@@ -1,6 +1,7 @@
 package net.apostasy.perpetuity.client;
 
 import net.apostasy.perpetuity.client.geckolib.render.RenovitePylonRenderer;
+import net.apostasy.perpetuity.client.render.EchoesSkyPass;
 import net.apostasy.perpetuity.registry.ModBlockEntities;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -13,6 +14,7 @@ public class PerpetuityClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockEntityRendererFactories.register(ModBlockEntities.RENOVITE_PYLON, (context) -> new RenovitePylonRenderer());
+        EchoesSkyPass.init();
     }
 
     public static Text getSneakKeyName() {

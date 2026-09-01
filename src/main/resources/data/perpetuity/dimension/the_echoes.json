@@ -1,15 +1,10 @@
 {
-  "type": "minecraft:overworld",
+  "type": "perpetuity:the_echoes",
   "generator": {
-    "type": "minecraft:flat",
-    "settings": {
-      "biome": "minecraft:pale_garden",
-      "lakes": false,
-      "features": false,
-      "layers": [],
-      "structure_overrides": [
-        "perpetuity:labyrinth_room"
-      ]
+    "type": "perpetuity:labyrinth",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "perpetuity:the_echoed_pale_garden"
     }
   }
 }
