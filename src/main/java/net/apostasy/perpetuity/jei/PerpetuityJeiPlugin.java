@@ -11,11 +11,16 @@ import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.apostasy.perpetuity.remnant.RemnantDataCollector;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +33,23 @@ public class PerpetuityJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         List<IJeiAnvilRecipe> recipes = new ArrayList<>();
+
+        List<Item> renoviteRepairs = Registries.ITEM.stream().filter(item -> item.getDefaultStack().isDamageable() && !item.getDefaultStack().isIn(TagKey.of(RegistryKeys.ITEM, Perpetuity.id("unrepairable_with_renovite")))).toList();
+        List<ItemStack> renoviteRepairInputs = new ArrayList<>();
+        List<ItemStack> renoviteRepairOutputs = new ArrayList<>();
+
+        for (Item item : renoviteRepairs) {
+            ItemStack stack = item.getDefaultStack();
+            stack.setDamage(stack.getMaxDamage()-1);
+            ItemStack repaired = stack.copy();
+            repaired.setDamage(stack.getDamage()/2-1);
+
+            renoviteRepairInputs.add(stack);
+            renoviteRepairOutputs.add(repaired);
+        }
+
+        recipes.add(registration.getVanillaRecipeFactory().createAnvilRecipe(renoviteRepairInputs, Collections.singletonList(ModItems.RENOVITE.getDefaultStack()), renoviteRepairOutputs, Perpetuity.id("recipe/renovite/repair_damageable")));
+
         RemnantDataCollector.remnantTypes.forEach((identifier, data) -> {
             List<ItemStack> outputs = new ArrayList<>();
             List<ItemStack> renoviteOutputs = new ArrayList<>();

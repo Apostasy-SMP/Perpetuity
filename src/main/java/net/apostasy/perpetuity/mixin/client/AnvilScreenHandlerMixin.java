@@ -1,5 +1,7 @@
 package net.apostasy.perpetuity.mixin.client;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
@@ -13,13 +15,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.ForgingSlotsManager;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -41,7 +46,21 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         ItemStack stack1 = input.getStack(0);
         ItemStack stack2 = input.getStack(1);
         RemnantComponent component = stack1.get(ModDataComponents.REMNANT);
-        if (component == null) return;
+        if (component == null) {
+            if (stack1.isDamageable() && stack1.isDamaged() && stack2.isOf(ModItems.RENOVITE)) {
+                if (stack1.isIn(TagKey.of(RegistryKeys.ITEM, Perpetuity.id("unrepairable_with_renovite")))) return;
+
+                ItemStack stack = stack1.copy();
+                stack.setDamage(stack.getDamage() - (stack.getMaxDamage()/2)); // Repair with 50% of durability
+
+                output.setStack(0, stack);
+                sendContentUpdates();
+
+                ci.cancel();
+            }
+
+            return;
+        }
 
         if (component.data().resources().contains(stack2.getItem())) {
             ItemStack stack = component.item().copy();
@@ -62,8 +81,20 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         } else levelCost.set(0);
     }
 
+    @Unique private ItemStack input1;
+    @Unique private ItemStack input2;
+
     @Inject(method = "onTakeOutput", at = @At("HEAD"))
     private void perpetuity$grantRepairAdvancement(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
+        input1 = input.getStack(0);
+        input2 = input.getStack(1);
+
         if (input.getStack(0).isOf(ModItems.REMNANT)) ClientPlayNetworking.send(new GrantAdvancementPayload(Perpetuity.id("remnant_anvil_repair"), player.getUuid()));
+    }
+
+    @Inject(method = "onTakeOutput", at = @At("TAIL"))
+    private void perpetuity$onlyTakeOneItem(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
+        if (input1.isOf(ModItems.REMNANT)) input.setStack(1, input2.copyWithCount(input2.getCount()-1));
+        else if (input1.isDamageable() && input2.isOf(ModItems.RENOVITE)) input.setStack(1, input2.copyWithCount(input2.getCount()-1));
     }
 }
