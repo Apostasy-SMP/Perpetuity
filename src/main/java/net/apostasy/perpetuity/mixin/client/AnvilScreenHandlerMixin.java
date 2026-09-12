@@ -1,22 +1,17 @@
 package net.apostasy.perpetuity.mixin.client;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
-import net.apostasy.perpetuity.network.GrantAdvancementPayload;
+import net.apostasy.perpetuity.network.c2s.GrantAdvancementPayload;
 import net.apostasy.perpetuity.registry.ModItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.ForgingSlotsManager;

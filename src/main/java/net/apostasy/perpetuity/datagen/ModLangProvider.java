@@ -39,12 +39,12 @@ public class ModLangProvider extends FabricLanguageProvider {
 
         translationBuilder.add("advancements.perpetuity.root.title", "Perpetuity");
         translationBuilder.add("advancements.perpetuity.root.description", "Welcome to Perpetuity!");
-        translationBuilder.add("advancements.perpetuity.obtain_remnant.title", "Gone but Not Forgotten");
-        translationBuilder.add("advancements.perpetuity.obtain_remnant.description", "Break an item to get its Remnant");
+        translationBuilder.add("advancements.perpetuity.obtain_remnant.title", "Gone but not Forgotten");
+        translationBuilder.add("advancements.perpetuity.obtain_remnant.description", "Break an item to get its Remnant.");
         translationBuilder.add("advancements.perpetuity.experience_cake_repair.title", "That's Crazy.");
         translationBuilder.add("advancements.perpetuity.experience_cake_repair.description", "Craft.");
-        translationBuilder.add("advancements.perpetuity.remnant_anvil_repair.title", "Back to The Basics");
-        translationBuilder.add("advancements.perpetuity.remnant_anvil_repair.description", "Repair a Remnant the old fashioned way");
+        translationBuilder.add("advancements.perpetuity.remnant_anvil_repair.title", "Back to the Basics");
+        translationBuilder.add("advancements.perpetuity.remnant_anvil_repair.description", "Repair a Remnant the old fashioned way.");
 
         translationBuilder.add("tooltip.remnant.repairs_into", "Repairs into ");
         translationBuilder.add("tooltip.remnant.preview", "[%1$s] to preview item");

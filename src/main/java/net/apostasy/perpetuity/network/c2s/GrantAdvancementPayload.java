@@ -1,4 +1,4 @@
-package net.apostasy.perpetuity.network;
+package net.apostasy.perpetuity.network.c2s;
 
 import net.apostasy.perpetuity.Perpetuity;
 import net.minecraft.network.RegistryByteBuf;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public record GrantAdvancementPayload(Identifier advancement, UUID player) implements CustomPayload {
     public static final Id<GrantAdvancementPayload> ID = new Id<>(Perpetuity.id("grant_advancement"));
-    public static final PacketCodec<RegistryByteBuf, GrantAdvancementPayload> PACKET_CODEC =
+    public static final PacketCodec<RegistryByteBuf, GrantAdvancementPayload> CODEC =
             PacketCodec.tuple(Identifier.PACKET_CODEC, GrantAdvancementPayload::advancement, Uuids.PACKET_CODEC, GrantAdvancementPayload::player, GrantAdvancementPayload::new);
 
     @Override

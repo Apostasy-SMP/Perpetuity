@@ -1,57 +1,22 @@
 package net.apostasy.perpetuity.mixin.client;
 
-import com.google.common.collect.Interner;
-import com.google.common.collect.Interners;
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
-import it.unimi.dsi.fastutil.objects.Object2ObjectFunction;
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.apostasy.perpetuity.Perpetuity;
-import net.apostasy.perpetuity.remnant.RemnantData;
-import net.apostasy.perpetuity.remnant.RemnantDataCollector;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.item.ItemAssetsLoader;
-import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.client.render.BlockRenderLayers;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.item.model.BasicItemModel;
-import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.client.render.item.model.MissingItemModel;
-import net.minecraft.client.render.item.tint.ConstantTintSource;
-import net.minecraft.client.render.item.tint.TintSource;
-import net.minecraft.client.render.model.*;
-import net.minecraft.client.render.model.json.GeneratedItemModel;
-import net.minecraft.client.render.model.json.JsonUnbakedModel;
-import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.render.model.json.Transformation;
-import net.minecraft.client.texture.MissingSprite;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Atlases;
 import net.minecraft.util.Identifier;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.*;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 @Mixin(BakedModelManager.class)

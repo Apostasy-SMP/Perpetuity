@@ -5,7 +5,11 @@
   "mixins": [
     "ExperienceBottleItemMixin",
     "GlassBottleItemMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "echoes.BlockItemMixin",
+    "echoes.EnchantmentHelperMixin",
+    "echoes.ItemStackMixin",
+    "echoes.PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -20,6 +24,9 @@
     "client.HandledScreenMixin$KeyBindingAccessor",
     "client.ItemModelManagerMixin",
     "client.ItemModelManagerMixin$BasicItemModelAccessor",
-    "client.ItemModelManagerMixin$ReferencedModelsCollectorAccessor"
+    "client.ItemModelManagerMixin$ReferencedModelsCollectorAccessor",
+    "echoes.client.EquipmentRendererMixin",
+    "echoes.client.DebugHudMixin",
+    "echoes.client.LivingEntityRendererMixin"
   ]
 }

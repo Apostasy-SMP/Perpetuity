@@ -1,6 +1,5 @@
 package net.apostasy.perpetuity.item;
 
-import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
 import net.apostasy.perpetuity.component.util.ToolInfoComponent;
@@ -41,17 +40,15 @@ public class RemnantItem extends Item {
         return returnStack;
     }
 
-    public static ItemStack repair(ItemStack stack, PlayerEntity player, float percentageRepaired) {
+    public static void repair(ItemStack stack, PlayerEntity player, float percentageRepaired) {
         percentageRepaired = Math.clamp(percentageRepaired, 0.0F, 1.0F);
         RemnantComponent component = stack.get(ModDataComponents.REMNANT);
-        if (component == null) return null;
+        if (component == null) return;
         ItemStack returnStack = component.item();
         returnStack.setDamage(Math.clamp((int) (returnStack.getMaxDamage() * (1 - percentageRepaired)), 0, returnStack.getMaxDamage()));
 
         int slot = player.getInventory().getSlotWithStack(stack);
         player.getInventory().setStack(slot, returnStack);
-
-        return returnStack;
     }
 
     @Override

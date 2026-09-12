@@ -1,15 +1,13 @@
 package net.apostasy.perpetuity.datagen;
 
-import net.apostasy.perpetuity.Perpetuity;
+import net.apostasy.perpetuity.registry.ModTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jspecify.annotations.NonNull;
 
@@ -22,8 +20,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.@NonNull WrapperLookup registries) {
-        builder(TagKey.of(RegistryKeys.ITEM, Perpetuity.id("ignored_by_pylon")));
-        builder(TagKey.of(RegistryKeys.ITEM, Perpetuity.id("unrepairable_with_renovite")));
+        builder(ModTags.IGNORED_BY_PYLON);
+        builder(ModTags.UNREPAIRABLE_WITH_RENOVITE);
     }
 
     protected RegistryKey<Item> key(Item item) {

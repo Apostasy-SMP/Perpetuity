@@ -10,8 +10,6 @@ import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.ModDataComponents;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
 import net.apostasy.perpetuity.registry.ModItems;
-import net.apostasy.perpetuity.remnant.RemnantData;
-import net.apostasy.perpetuity.remnant.RemnantDataCollector;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -47,7 +45,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)

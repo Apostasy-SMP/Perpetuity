@@ -1,6 +1,5 @@
 package net.apostasy.perpetuity.component;
 
-import com.mojang.serialization.Codec;
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.component.util.RemnantComponent;
 import net.apostasy.perpetuity.component.util.ToolInfoComponent;
@@ -9,7 +8,6 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 import java.util.function.UnaryOperator;
 

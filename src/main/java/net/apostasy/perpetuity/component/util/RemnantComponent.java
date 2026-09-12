@@ -2,7 +2,6 @@ package net.apostasy.perpetuity.component.util;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.client.PerpetuityClient;
 import net.apostasy.perpetuity.remnant.RemnantData;
 import net.fabricmc.api.EnvType;
@@ -12,14 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
-import net.minecraft.util.Colors;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.intprovider.IntProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
