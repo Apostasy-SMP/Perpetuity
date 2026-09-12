@@ -1,6 +1,6 @@
 package net.apostasy.perpetuity.event;
 
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -12,9 +12,9 @@ import net.minecraft.world.TeleportTarget;
  */
 public class PortalEchoesEvent implements ServerTickEvents.StartWorldTick {
     public void onStartTick(ServerWorld world) {
-        if (world.getRegistryKey() == LUtil.ECHOES_KEY) {
+        if (world.getRegistryKey() == EchoUtil.ECHOES_KEY) {
             for (ServerPlayerEntity player : world.getPlayers()) {
-                if (player.getY() < LUtil.MIN_Y_HEIGHT) {
+                if (player.getY() < EchoUtil.MIN_Y_HEIGHT) {
                     player.teleportTo(
                             new TeleportTarget(
                                     world,

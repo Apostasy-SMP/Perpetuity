@@ -2,7 +2,7 @@ package net.apostasy.perpetuity.mixin.echoes.client;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.DebugHud;
@@ -28,7 +28,7 @@ public abstract class DebugHudMixin {
         PlayerEntity player = this.client.player;
 
         if (player != null) {
-            if (LUtil.effectsApplicable(player)) {
+            if (EchoUtil.effectsApplicable(player)) {
                 if (this.shouldShowDebugHud()) {
                     context.drawText(
                             this.client.textRenderer,

@@ -2,7 +2,7 @@ package net.apostasy.perpetuity.mixin.echoes;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class PlayerEntityMixin {
     @WrapMethod(method = "canPlaceOn")
     private boolean perpetuity$denyPlacingBlocksAboveMaxLevel(BlockPos pos, Direction facing, ItemStack stack, Operation<Boolean> original) {
-        if (LUtil.effectsApplicable((PlayerEntity) (Object) this)) {
-            if (pos.getY() >= LUtil.MAX_Y_HEIGHT) {
+        if (EchoUtil.effectsApplicable((PlayerEntity) (Object) this)) {
+            if (pos.getY() >= EchoUtil.MAX_Y_HEIGHT) {
                 return false;
             }
         }
@@ -28,8 +28,8 @@ public abstract class PlayerEntityMixin {
 
     @WrapMethod(method = "isBlockBreakingRestricted")
     private boolean perpetuity$removeBlockBreaking(World world, BlockPos pos, GameMode gameMode, Operation<Boolean> original) {
-        if (LUtil.effectsApplicable((PlayerEntity) (Object) this)) {
-            if (pos.getY() >= LUtil.MAX_Y_HEIGHT) {
+        if (EchoUtil.effectsApplicable((PlayerEntity) (Object) this)) {
+            if (pos.getY() >= EchoUtil.MAX_Y_HEIGHT) {
                 return false;
             }
         }

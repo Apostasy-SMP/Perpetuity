@@ -2,7 +2,7 @@ package net.apostasy.perpetuity.mixin.echoes;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -31,8 +31,8 @@ public abstract class ItemStackMixin {
     private boolean perpetuity$removePlacingBlocksAboveY(CachedBlockPosition pos, Operation<Boolean> original) {
         ItemStack self = (ItemStack) (Object) this;
 
-        if (LUtil.effectsApplicable(self.getHolder())) {
-            if (pos.getBlockPos().getY() >= LUtil.MAX_Y_HEIGHT) {
+        if (EchoUtil.effectsApplicable(self.getHolder())) {
+            if (pos.getBlockPos().getY() >= EchoUtil.MAX_Y_HEIGHT) {
                 return false;
             }
         }
@@ -43,8 +43,8 @@ public abstract class ItemStackMixin {
     private boolean perpetuity$removeBreakingBlocksAboveY(CachedBlockPosition pos, Operation<Boolean> original) {
         ItemStack self = (ItemStack) (Object) this;
 
-        if (LUtil.effectsApplicable(self.getHolder())) {
-            if (pos.getBlockPos().getY() >= LUtil.MAX_Y_HEIGHT) {
+        if (EchoUtil.effectsApplicable(self.getHolder())) {
+            if (pos.getBlockPos().getY() >= EchoUtil.MAX_Y_HEIGHT) {
                 return false;
             }
         }
@@ -55,7 +55,7 @@ public abstract class ItemStackMixin {
     private boolean perpetuity$removeGlint(Operation<Boolean> original) {
         ItemStack self = (ItemStack) (Object) this;
 
-        if (LUtil.effectsApplicable(self.getHolder())) {
+        if (EchoUtil.effectsApplicable(self.getHolder())) {
             return false;
         }
         return original.call();

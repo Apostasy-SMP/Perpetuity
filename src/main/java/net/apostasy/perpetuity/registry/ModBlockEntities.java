@@ -17,7 +17,5 @@ public class ModBlockEntities {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, Perpetuity.id(name), FabricBlockEntityTypeBuilder.<T>create(entityFactory, blocks).build());
     }
 
-    public static void init() {
-
-    }
+    public static void init() {}
 }

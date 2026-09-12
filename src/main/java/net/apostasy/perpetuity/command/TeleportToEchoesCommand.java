@@ -3,7 +3,7 @@ package net.apostasy.perpetuity.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.apostasy.perpetuity.network.s2c.RiftBangPayload;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.command.CommandRegistryAccess;
@@ -27,14 +27,14 @@ public class TeleportToEchoesCommand implements CommandRegistrationCallback {
                     PlayerEntity player = EntityArgumentType.getPlayer(context, "target");
 
                     if (player != null) {
-                        LUtil.teleportIntoValidLabyrinthPos(player, IntegerArgumentType.getInteger(context, "timeTillRelease"));
+                        EchoUtil.teleportIntoValidLabyrinthPos(player, IntegerArgumentType.getInteger(context, "timeTillRelease"));
                     }
                     return 1;
                 })))
         );
 
         dispatcher.register(literal("riftbang").executes(context -> {
-            ServerWorld echoes = LUtil.fetchEchoes(context.getSource().getServer());
+            ServerWorld echoes = EchoUtil.fetchEchoes(context.getSource().getServer());
 
             if (echoes != null) {
                 for (ServerPlayerEntity serverPlayer : echoes.getPlayers()) {

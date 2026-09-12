@@ -27,7 +27,7 @@ import java.util.Random;
  * @author Chemthunder
  */
 // Labyrinth Utilities
-public class LUtil {
+public class EchoUtil {
     public static final int MAX_Y_HEIGHT = 17;
     public static final int MIN_Y_HEIGHT = -2;
 

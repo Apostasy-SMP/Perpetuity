@@ -1,7 +1,7 @@
 package net.apostasy.perpetuity.mixin.echoes.client;
 
 import net.apostasy.perpetuity.client.PerpetuityClient;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -30,6 +30,6 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
             )
     )
     private void perpetuity$applyRenderKey(T livingEntity, S livingEntityRenderState, float f, CallbackInfo ci) {
-        livingEntityRenderState.setData(PerpetuityClient.IN_ECHOES, LUtil.effectsApplicable(livingEntity));
+        livingEntityRenderState.setData(PerpetuityClient.IN_ECHOES, EchoUtil.effectsApplicable(livingEntity));
     }
 }

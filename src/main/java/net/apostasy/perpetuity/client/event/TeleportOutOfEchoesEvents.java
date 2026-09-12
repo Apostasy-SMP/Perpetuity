@@ -2,7 +2,7 @@ package net.apostasy.perpetuity.client.event;
 
 import net.apostasy.perpetuity.Perpetuity;
 import net.apostasy.perpetuity.network.c2s.TeleportOutOfEchoesPayload;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -40,7 +40,7 @@ public class TeleportOutOfEchoesEvents {
             opacity = Math.clamp(opacity, 0.0F, 0.9F);
 
             if (timeTillTP > 0) {
-                if (!LUtil.isInLabyrinth(player)) {
+                if (!EchoUtil.isInLabyrinth(player)) {
                     timeTillTP = 0;
                     opacity = 0.0F;
                     return;
@@ -54,7 +54,7 @@ public class TeleportOutOfEchoesEvents {
                 }
             }
 
-            if (LUtil.isInLabyrinth(player)) {
+            if (EchoUtil.isInLabyrinth(player)) {
                 if (timeTillTP <= 80) {
                     if (opacity < 1.0F) {
                         opacity += 0.01F;

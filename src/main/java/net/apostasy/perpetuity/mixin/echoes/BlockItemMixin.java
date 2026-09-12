@@ -2,7 +2,7 @@ package net.apostasy.perpetuity.mixin.echoes;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.apostasy.perpetuity.util.LUtil;
+import net.apostasy.perpetuity.util.EchoUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
@@ -22,7 +22,7 @@ public abstract class BlockItemMixin {
         BlockPos pos = context.getBlockPos();
         ItemStack stack = context.getStack();
 
-        if (LUtil.effectsApplicable(stack.getHolder()) && pos.getY() >= LUtil.MAX_Y_HEIGHT) {
+        if (EchoUtil.effectsApplicable(stack.getHolder()) && pos.getY() >= EchoUtil.MAX_Y_HEIGHT) {
             return false;
         }
         return original.call(context, state);
@@ -33,7 +33,7 @@ public abstract class BlockItemMixin {
         BlockPos pos = context.getBlockPos();
         ItemStack stack = context.getStack();
 
-        if (LUtil.effectsApplicable(stack.getHolder()) && pos.getY() >= LUtil.MAX_Y_HEIGHT) {
+        if (EchoUtil.effectsApplicable(stack.getHolder()) && pos.getY() >= EchoUtil.MAX_Y_HEIGHT) {
             return ActionResult.FAIL;
         }
         return original.call(context);
