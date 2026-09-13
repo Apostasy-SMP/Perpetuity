@@ -2,6 +2,7 @@ package net.apostasy.perpetuity;
 
 import net.apostasy.perpetuity.command.TeleportToEchoesCommand;
 import net.apostasy.perpetuity.component.ModDataComponents;
+import net.apostasy.perpetuity.event.EchoesRiftBangEvent;
 import net.apostasy.perpetuity.event.PortalEchoesEvent;
 import net.apostasy.perpetuity.network.c2s.GrantAdvancementPayload;
 import net.apostasy.perpetuity.network.c2s.TeleportOutOfEchoesPayload;
@@ -39,6 +40,7 @@ public class Perpetuity implements ModInitializer {
 
 		CommandRegistrationCallback.EVENT.register(new TeleportToEchoesCommand());
 		ServerTickEvents.START_WORLD_TICK.register(new PortalEchoesEvent());
+		ServerTickEvents.START_WORLD_TICK.register(new EchoesRiftBangEvent());
 
 		PayloadTypeRegistry.playC2S().register(GrantAdvancementPayload.ID, GrantAdvancementPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(TeleportOutOfEchoesPayload.ID, TeleportOutOfEchoesPayload.CODEC);

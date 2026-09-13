@@ -9,7 +9,8 @@
     "echoes.BlockItemMixin",
     "echoes.EnchantmentHelperMixin",
     "echoes.ItemStackMixin",
-    "echoes.PlayerEntityMixin"
+    "echoes.PlayerEntityMixin",
+    "echoes.compat.thefogiscomming.FogBorderControllerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -25,8 +26,8 @@
     "client.ItemModelManagerMixin",
     "client.ItemModelManagerMixin$BasicItemModelAccessor",
     "client.ItemModelManagerMixin$ReferencedModelsCollectorAccessor",
-    "echoes.client.EquipmentRendererMixin",
     "echoes.client.DebugHudMixin",
+    "echoes.client.EquipmentRendererMixin",
     "echoes.client.LivingEntityRendererMixin"
   ]
 }
