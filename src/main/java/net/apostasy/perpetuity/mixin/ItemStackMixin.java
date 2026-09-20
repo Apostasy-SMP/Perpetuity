@@ -22,7 +22,12 @@ public abstract class ItemStackMixin {
             return;
         }
 
-        int newSlot = player.getInventory().getEmptySlot();
+        int newSlot = 0;
+        try {
+            newSlot = player.getInventory().getEmptySlot();
+        } catch (Exception e) {
+            return;
+        }
 
         if (newSlot == -1) {
             player.dropItem(newStack, true, false);

@@ -9,8 +9,7 @@
     "echoes.BlockItemMixin",
     "echoes.EnchantmentHelperMixin",
     "echoes.ItemStackMixin",
-    "echoes.PlayerEntityMixin",
-    "echoes.compat.thefogiscomming.FogBorderControllerMixin"
+    "echoes.PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
