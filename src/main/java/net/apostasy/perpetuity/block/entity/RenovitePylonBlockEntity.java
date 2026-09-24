@@ -1,6 +1,7 @@
 package net.apostasy.perpetuity.block.entity;
 
 import net.apostasy.perpetuity.registry.ModBlockEntities;
+import net.apostasy.perpetuity.registry.ModTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -31,16 +32,14 @@ public class RenovitePylonBlockEntity extends BlockEntity implements GeoBlockEnt
         world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(5), LivingEntity::isAlive).forEach(player -> {
             player.getInventory().getMainStacks().stream()
                     .filter(ItemStack::isDamaged)
-                    .forEach(stack -> stack.setDamage(stack.getDamage() - 5));
+                    .forEach(stack -> {
+                        if (!stack.isIn(ModTags.IGNORED_BY_PYLON)) stack.setDamage(stack.getDamage() - 5);
+                    });
         });
     }
 
-    @Override
-    public void registerControllers(AnimatableManager.@NonNull ControllerRegistrar controllers) {
+    public void registerControllers(AnimatableManager.@NonNull ControllerRegistrar controllers) {}
 
-    }
-
-    @Override
     public @NonNull AnimatableInstanceCache getAnimatableInstanceCache() {
         return geoCache;
     }

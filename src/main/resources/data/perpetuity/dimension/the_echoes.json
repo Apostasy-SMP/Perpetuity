@@ -4,7 +4,7 @@
     "type": "perpetuity:labyrinth",
     "biome_source": {
       "type": "minecraft:fixed",
-      "biome": "perpetuity:echoes"
+      "biome": "perpetuity:the_echoed_pale_garden"
     }
   }
 }

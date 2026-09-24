@@ -16,7 +16,5 @@ public class ModStats {
         return identifier;
     }
 
-    public static void init() {
-
-    }
+    public static void init() {}
 }

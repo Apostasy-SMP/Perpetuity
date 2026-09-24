@@ -1,0 +1,8 @@
+{
+  "event.distant_bang": {
+    "sounds": [
+      "perpetuity:event/distant_bang"
+    ],
+    "subtitle": "subtitles.perpetuity.event.distant_bang"
+  }
+}

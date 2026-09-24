@@ -2,7 +2,10 @@ package net.apostasy.perpetuity.remnant;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.item.Item;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
@@ -17,4 +20,6 @@ public record RemnantData(List<Item> resources, Text name, Identifier texture, I
             Identifier.CODEC.fieldOf("texture").forGetter(RemnantData::texture),
             Identifier.CODEC.fieldOf("id").forGetter(RemnantData::id)
     ).apply(instance, RemnantData::new));
+
+    public static final PacketCodec<ByteBuf, RemnantData> PACKET_CODEC = PacketCodecs.codec(CODEC);
 }

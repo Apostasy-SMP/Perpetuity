@@ -8,19 +8,18 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.StringIdentifiable;
 
 public class AdvancementUtil {
-    public static AdvancementResult grantAdvancement(ServerPlayerEntity player, Identifier advancement) {
-        if (player.getEntityWorld().getServer() == null) return AdvancementResult.SERVER_NOT_FOUND;
+    public static void grantAdvancement(ServerPlayerEntity player, Identifier advancement) {
+        if (player.getEntityWorld().getServer() == null) return;
         PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
 
         AdvancementEntry entry = player.getEntityWorld().getServer().getAdvancementLoader().get(advancement);
-        if (entry == null) return AdvancementResult.INVALID_ADVANCEMENT;
+        if (entry == null) return;
 
         if (!advancementTracker.getProgress(entry).isDone()) {
             for (String criteria : advancementTracker.getProgress(entry).getUnobtainedCriteria()) {
                 advancementTracker.grantCriterion(entry, criteria);
             }
-        } else return AdvancementResult.PASS;
-        return AdvancementResult.SUCCESS;
+        }
     }
 
     public static AdvancementResult revokeAdvancement(ServerPlayerEntity player, Identifier advancement) {

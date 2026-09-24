@@ -1,6 +1,5 @@
 package net.apostasy.perpetuity.remnant;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -13,7 +12,6 @@ import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Language;
 import org.jspecify.annotations.NonNull;
 
 import java.io.InputStreamReader;
