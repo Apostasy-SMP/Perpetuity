@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.structure.StructureTemplateManager;
+import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
@@ -36,9 +37,9 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Chunk generator for the infinite labyrinth. The dimension holds nothing but the authored tiles -
- * no terrain, surface, carvers or features - so every column starts as air and only corridors are
- * written.
+ * Chunk generator for the infinite labyrinth. Each chunk starts as a stone plateau with a grass
+ * surface; authored templates then carve the corridors and rooms through it by placing their air
+ * as well as their visible blocks.
  *
  * <p>{@link LabyrinthMaze} answers per cell which sides carry a corridor, from the cell's own
  * coordinates, so neighbouring chunks always agree. {@link LabyrinthBranches} fills each ring's
@@ -53,14 +54,14 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 					BiomeSource.CODEC.fieldOf("biome_source").forGetter(generator -> generator.biomeSource)
 			).apply(instance, LabyrinthChunkGenerator::new));
 
-	/** Total dimension height. Keeping this small is the single biggest performance win here. */
-	public static final int WORLD_HEIGHT = 32;
+	/** Enough headroom for the 48-block cathedral and remnant templates. */
+	public static final int WORLD_HEIGHT = 64;
 	public static final int MIN_Y = 0;
+	/** Solid plateau left between the corridors that the NBT templates carve out. */
+	public static final int TERRAIN_TOP_Y = 24;
 
-	/** Free space around a ring's interior. A stub sits this far inside its cell boundary. */
+	/** Extra space around a ring's nominal interior available to branch pieces. */
 	private static final int MARGIN = 4;
-	/** Tallest piece, for the region the branch engine may build in. */
-	private static final int PIECE_HEIGHT = 20;
 	private static final int PLAN_CACHE = 256;
 
 	private volatile LabyrinthMaze maze;
@@ -173,7 +174,7 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 			if (!c.lattice() || PieceShape.rotateFacing(c.facing(), rotation) != anchor) continue;
 
 			int[] origin = shape.originForConn(i, rotation,
-					exitX(cellX, anchor), LabyrinthTileSet.BASE_Y + 1, exitZ(cellZ, anchor));
+					exitX(cellX, anchor), LabyrinthTileSet.PATH_Y, exitZ(cellZ, anchor));
 			return new BlockPos(origin[0], origin[1], origin[2]);
 		}
 		Perpetuity.LOGGER.warn("Labyrinth: {} has no lattice exit facing {} under rotation {}",
@@ -206,7 +207,7 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 	}
 
 	private LabyrinthBranches.Plan buildPlan(LabyrinthMaze maze, LabyrinthTileSet tileSet, int ringX, int ringZ) {
-		// Walls the branch engine must respect. A host swaps in a stubbed tile of the same footprint.
+		// Walls the branch engine must respect. A host swaps in a T tile of the same footprint.
 		List<int[]> obstacles = new ArrayList<>();
 		for (long[] cell : maze.ringCells(ringX, ringZ)) {
 			int cellX = (int) cell[0];
@@ -225,16 +226,15 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 		}
 
 		int[] region = maze.pocketRegion(ringX, ringZ, LabyrinthTileSet.CELL, MARGIN,
-				LabyrinthTileSet.BASE_Y, LabyrinthTileSet.BASE_Y + PIECE_HEIGHT + 1);
+				MIN_Y, MIN_Y + WORLD_HEIGHT - 1);
 
-		int stub = stubArm(tileSet);
 		List<LabyrinthBranches.Port> candidates = new ArrayList<>();
 		for (LabyrinthMaze.Port port : maze.ports(ringX, ringZ)) {
 			int facing = LabyrinthTileSet.facingOfMask(port.inward());
 			candidates.add(new LabyrinthBranches.Port(
-					port.cellX() * LabyrinthTileSet.CELL + LabyrinthTileSet.ARM + PieceShape.stepX(facing) * stub,
-					LabyrinthTileSet.BASE_Y + 1,
-					port.cellZ() * LabyrinthTileSet.CELL + LabyrinthTileSet.ARM + PieceShape.stepZ(facing) * stub,
+					exitX(port.cellX(), facing),
+					LabyrinthTileSet.PATH_Y,
+					exitZ(port.cellZ(), facing),
 					facing, port.cellX(), port.cellZ()));
 		}
 
@@ -245,14 +245,6 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 					for (int[] wall : walls) if (PieceShape.intersects(box, wall)) return true;
 					return false;
 				});
-	}
-
-	private int stubArm(LabyrinthTileSet tileSet) {
-		for (PieceShape shape : tileSet.branchSet()) {
-			int arm = LabyrinthTileSet.stubArm(shape);
-			if (arm > 0) return arm;
-		}
-		return 0;
 	}
 
 	// --------------------------------------------------------------- stamping
@@ -273,6 +265,7 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 				.setRotation(blockRotation)
 				.setIgnoreEntities(true)
 				.setUpdateNeighbors(false)
+				.addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS)
 				.setBoundingBox(chunkBox);
 
 		template.place(world, origin, origin, data, random, Block.NOTIFY_LISTENERS);
@@ -312,12 +305,12 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 
 			int wantX = exitX(cellX, c.facing());
 			int wantZ = exitZ(cellZ, c.facing());
-			if (c.x() != wantX || c.y() != LabyrinthTileSet.BASE_Y + 1 || c.z() != wantZ) {
+			if (c.x() != wantX || c.y() != LabyrinthTileSet.PATH_Y || c.z() != wantZ) {
 				Perpetuity.LOGGER.error(
 						"Labyrinth: {} rotated {} puts its {} exit at {},{},{} but the lattice needs {},{},{}"
 								+ " - that corridor will not meet its neighbour",
 						shape.id(), rotation, LabyrinthTileSet.direction(c.facing()),
-						c.x(), c.y(), c.z(), wantX, LabyrinthTileSet.BASE_Y + 1, wantZ);
+						c.x(), c.y(), c.z(), wantX, LabyrinthTileSet.PATH_Y, wantZ);
 			}
 		}
 	}
@@ -367,6 +360,19 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 	@Override
 	public void buildSurface(ChunkRegion region, StructureAccessor structureAccessor,
 	                         NoiseConfig noiseConfig, Chunk chunk) {
+		ChunkPos chunkPos = chunk.getPos();
+		BlockPos.Mutable pos = new BlockPos.Mutable();
+		BlockState stone = Blocks.STONE.getDefaultState();
+		BlockState grass = Blocks.GRASS_BLOCK.getDefaultState();
+
+		for (int x = chunkPos.getStartX(); x <= chunkPos.getEndX(); x++) {
+			for (int z = chunkPos.getStartZ(); z <= chunkPos.getEndZ(); z++) {
+				for (int y = MIN_Y; y < TERRAIN_TOP_Y; y++) {
+					chunk.setBlockState(pos.set(x, y, z), stone, 0);
+				}
+				chunk.setBlockState(pos.set(x, TERRAIN_TOP_Y, z), grass, 0);
+			}
+		}
 	}
 
 	@Override
@@ -390,18 +396,27 @@ public class LabyrinthChunkGenerator extends ChunkGenerator {
 
 	@Override
 	public int getSpawnHeight(HeightLimitView world) {
-		return LabyrinthTileSet.BASE_Y + 1;
+		return LabyrinthTileSet.PATH_Y;
 	}
 
 	@Override
 	public int getHeight(int x, int z, Heightmap.Type heightmap, HeightLimitView world, NoiseConfig noiseConfig) {
-		return LabyrinthTileSet.BASE_Y + 1;
+		return TERRAIN_TOP_Y + 1;
 	}
 
 	@Override
 	public VerticalBlockSample getColumnSample(int x, int z, HeightLimitView world, NoiseConfig noiseConfig) {
 		BlockState[] column = new BlockState[world.getHeight()];
 		Arrays.fill(column, Blocks.AIR.getDefaultState());
+		int bottom = world.getBottomY();
+		int stoneStart = Math.max(MIN_Y, bottom);
+		int stoneEnd = Math.min(TERRAIN_TOP_Y, bottom + world.getHeight());
+		for (int y = stoneStart; y < stoneEnd; y++) {
+			column[y - bottom] = Blocks.STONE.getDefaultState();
+		}
+		if (TERRAIN_TOP_Y >= bottom && TERRAIN_TOP_Y < bottom + world.getHeight()) {
+			column[TERRAIN_TOP_Y - bottom] = Blocks.GRASS_BLOCK.getDefaultState();
+		}
 		return new VerticalBlockSample(world.getBottomY(), column);
 	}
 

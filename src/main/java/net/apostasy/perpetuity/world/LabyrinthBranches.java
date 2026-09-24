@@ -12,10 +12,10 @@ import java.util.Random;
  * therefore chain, fork wherever a piece has three or four connectors, and rejoin where two open
  * ends coincide exactly.
  *
- * <p>Rejoining is limited by geometry, not tuning. A stub stops 4 blocks short of its cell
- * boundary, so a branch off a north-side stub runs on the lattice shifted by (0,-4) and a
- * south-side stub sits on (0,+4) - those never meet. Two stubs on the same side share a shift, and
- * there a loop closes exactly.
+ * <p>Every live connector is considered when another piece is placed. Arms can therefore merge
+ * whenever their connector positions and facings meet exactly. Before free growth begins, the
+ * planner also searches for short routes between entrance pairs so interconnected arms and loops
+ * occur deliberately rather than only by chance.
  *
  * <p>No open end is ever left facing nothing: each reserves the space its cap would occupy and no
  * piece may be placed over a live reservation, so a cap is always still placeable when growth stops.
@@ -25,7 +25,7 @@ public final class LabyrinthBranches {
 	/** A piece the engine decided to place. */
 	public record Placed(PieceShape shape, int rotation, int x, int y, int z) {}
 
-	/** A stub on the ring a branch may grow from, and the corridor cell that owns it. */
+	/** An inward-facing doorway on the ring, and the corridor cell that owns it. */
 	public record Port(int x, int y, int z, int facing, int hostCellX, int hostCellZ) {}
 
 	/** @param accepted ports actually taken up; cells not listed stay plain straights */
@@ -36,10 +36,10 @@ public final class LabyrinthBranches {
 		boolean blocked(int[] box);
 	}
 
-	private static final int MAX_PIECES = 16;
-	private static final int MAX_DEPTH = 5;
+	private static final int MAX_PIECES = 32;
+	private static final int MAX_DEPTH = 8;
 	/** Pieces a loop-closing route may use. */
-	private static final int ROUTE_DEPTH = 3;
+	private static final int ROUTE_DEPTH = 4;
 
 	private LabyrinthBranches() {}
 
@@ -136,8 +136,8 @@ public final class LabyrinthBranches {
 
 	/**
 	 * Searches for a short run of pieces from {@code from} landing exactly on {@code to}, joining two
-	 * stubs into a loop. Only two-connector pieces are used, so the route is a passage rather than a
-	 * junction and the search stays small enough to run for every pair.
+	 * entrances into a loop. Only two-connector pieces are used, so the route is a passage rather
+	 * than a junction and the search stays small enough to run for every pair.
 	 */
 	private static List<Placed> findRoute(Open from, Open to, int[] region, List<PieceShape> pieces,
 	                                      List<int[]> boxes, List<Open> open, Obstacles obstacles, int depth) {
@@ -168,7 +168,7 @@ public final class LabyrinthBranches {
 					PieceShape.Conn far = shape.place(rotation, origin[0], origin[1], origin[2]).get(1 - k);
 					Placed step = new Placed(shape, rotation, origin[0], origin[1], origin[2]);
 
-					// Landed on the far stub: the route is complete.
+					// Landed on the far entrance: the route is complete.
 					if (far.x() == landX && far.y() == to.y() && far.z() == landZ
 							&& far.facing() == landFacing) {
 						List<Placed> route = new ArrayList<>();

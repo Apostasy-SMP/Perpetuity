@@ -49,7 +49,7 @@ public final class LabyrinthMaze {
 	 * {@code (SUB-2)^2} interior for branches; larger values mean bigger branch rooms and a thinner
 	 * corridor grid.
 	 */
-	private static final int SUB = 5;
+	private static final int SUB = 7;
 	/** Levels before falling back to a fixed tree. Level 7 already exceeds the world border. */
 	private static final int MAX_LEVEL = 7;
 
@@ -190,7 +190,7 @@ public final class LabyrinthMaze {
 	public record Port(int cellX, int cellZ, int inward) {}
 
 	/** Fraction of eligible cells offered to the branch engine. */
-	private static final float PORT_CHANCE = 0.55f;
+	private static final float PORT_CHANCE = 0.65f;
 
 	/**
 	 * Cells of a ring that could open an arm inwards: on the perimeter, next to the interior, and

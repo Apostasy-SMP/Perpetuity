@@ -19,33 +19,36 @@ import java.util.Optional;
  * Reads the authored NBTs and works out what each piece is, so adding a tile means dropping in a
  * file and naming it here.
  *
- * <p>Exits come from the jigsaw blocks, and an exit carries a lattice connection exactly when it is
- * {@link #ARM} blocks from the piece's centre on that axis - anything else cannot meet a neighbour
- * and is a stub. That measurement is what separates {@code path} from {@code tpath} with nothing
- * written down. Roles follow from it too: the cap is whichever piece has one connector, a host has a
- * stub, and corridor tiles are matched by their lattice arms alone.
+ * <p>Exits come from the jigsaw blocks. On a 25x25 corridor tile, an exit carries a lattice
+ * connection exactly when it is {@link #ARM} blocks from the piece's centre on that axis. Larger
+ * landmark pieces are free-form branch pieces. Roles follow from geometry: the cap is whichever
+ * piece has one connector, a v2 host adds one lattice arm to the ring, and corridor tiles are
+ * matched by their lattice arms alone.
  *
- * <p>Weights decide how eagerly the branch engine reaches for a piece; junctions are weighted up
- * because they need a cap on every spare arm and so lose most races for space.
+ * <p>Weights decide how eagerly the branch engine reaches for a piece. Compact paths and corners
+ * stay common, while junctions and large landmarks still enter the seeded draw often enough to
+ * produce recognisably different pockets.
  */
 public final class LabyrinthTileSet {
 	/** Blocks per lattice cell. */
 	public static final int CELL = 25;
 	/** Distance from a piece's centre to an exit that reaches the cell boundary. */
 	public static final int ARM = 12;
-	/** World Y of a piece's bottom layer. */
-	public static final int BASE_Y = 4;
+	/** World Y shared by every jigsaw doorway, regardless of its local height in the NBT. */
+	public static final int PATH_Y = 7;
 
 	/** Piece name to weight; everything else about a piece is read from its NBT. */
 	private static final Map<String, Integer> PIECES = new LinkedHashMap<>();
 
 	static {
-		PIECES.put("grasslandpath", 2);
-		PIECES.put("grasslandcorner", 2);
-		PIECES.put("grasslandcrossroad", 3);
+		PIECES.put("grasslandpath", 4);
+		PIECES.put("grasslandcorner", 4);
 		PIECES.put("grasslandtpath", 3);
-		PIECES.put("grasslandthincrossroads", 3);
+		PIECES.put("grasslandcrossroad", 2);
 		PIECES.put("grasslanddeadend", 1);
+		PIECES.put("grasslandcathedral", 2);
+		PIECES.put("grasslandpool", 2);
+		PIECES.put("grasslandremnant", 2);
 	}
 
 	private final Map<String, PieceShape> shapes = new LinkedHashMap<>();
@@ -152,8 +155,22 @@ public final class LabyrinthTileSet {
 		return matches.get((int) Math.floorMod(variant, matches.size()));
 	}
 
-	/** A tile that matches the mask and points a stub at {@code inward}. */
+	/**
+	 * A tile that keeps the ring's existing exits and adds one full arm toward {@code inward}.
+	 * The v2 T-path is a complete 25x25 tile, so its branch exit sits on the next cell boundary
+	 * instead of ending in a short in-template stub.
+	 */
 	public Object[] host(int mask, int inward) {
+		int hostedMask = mask | maskOf(inward);
+		for (PieceShape shape : shapes.values()) {
+			for (int rotation = 0; rotation < 4; rotation++) {
+				if (latticeMask(shape, rotation) == hostedMask) {
+					return new Object[]{shape, rotation};
+				}
+			}
+		}
+
+		// Keep support for older short-arm host pieces in resource packs.
 		for (PieceShape shape : shapes.values()) {
 			for (int rotation = 0; rotation < 4; rotation++) {
 				if (latticeMask(shape, rotation) != mask) continue;
@@ -165,18 +182,6 @@ public final class LabyrinthTileSet {
 			}
 		}
 		return null;
-	}
-
-	/** How far a stub sits from the cell centre, for locating its port in world space. */
-	public static int stubArm(PieceShape shape) {
-		for (PieceShape.Conn c : shape.connectors()) {
-			if (c.lattice()) continue;
-			boolean xAxis = c.facing() == PieceShape.EAST || c.facing() == PieceShape.WEST;
-			int along = xAxis ? c.x() : c.z();
-			int centre = (xAxis ? shape.sizeX() : shape.sizeZ()) / 2;
-			return Math.abs(along - centre);
-		}
-		return 0;
 	}
 
 	private static boolean hasStub(PieceShape shape) {
