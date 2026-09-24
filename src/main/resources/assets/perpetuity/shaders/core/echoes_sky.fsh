@@ -8,6 +8,8 @@
 layout(std140) uniform EchoesSky {
     mat4 CameraToWorld;   // rotation only
     vec4 CameraWorld;     // xyz camera position, w seconds
+    vec4 FlashWorld;      // xyz strike base relative to the camera, w seconds since flash began
+    vec4 FlashData;       // x deterministic bolt seed
 };
 
 uniform sampler2D InputColor;
@@ -53,11 +55,11 @@ const vec3 HALO_DEEP = vec3(0.16, 0.38, 0.62);
 const vec3 SPACE_COLOR = vec3(0.008, 0.010, 0.022);
 const float STAR_DENSITY = 220.0;
 
-// Mist band. Tile floors sit at y=4, walls top out near y=21, and the dimension is 32 tall.
+// Mist band. Paths sit at y=7, the plateau is y=24, and the dimension is 64 blocks tall.
 // The base deliberately overlaps the top of the walls so blocks and the sky beside them pick up
 // comparable haze; without the overlap, lit stone meets near-black sky with nothing between.
-const float FOG_BASE_Y = 14.0;
-const float FOG_TOP_Y = 31.0;
+const float FOG_BASE_Y = 18.0;
+const float FOG_TOP_Y = 63.0;
 // Optical density per block inside the band.
 const float FOG_DENSITY = 0.04;
 const float FOG_STRENGTH = 0.9;
@@ -65,6 +67,10 @@ const float FOG_SKY_DISTANCE = 300.0;
 // Thin fog with no height limit. The band alone is only entered by rays that climb into it, so
 // horizontal views along a corridor would otherwise pick up no fog at all.
 const float HAZE_DENSITY = 0.004;
+
+const int BOLT_SEGMENTS = 12;
+const float BOLT_HEIGHT = 39.0;
+const vec3 FLASH_COLOR = vec3(0.68, 0.82, 1.0);
 
 vec4 permute_3d(vec4 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
 vec4 taylorInvSqrt3d(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
@@ -162,6 +168,63 @@ float hash13(vec3 p) {
     p = fract(p * 0.1031);
     p += dot(p, p.zyx + 31.32);
     return fract((p.x + p.y) * p.z);
+}
+
+float hash11(float p) {
+    return fract(sin(p * 127.1) * 43758.5453123);
+}
+
+float lightningPulse(float age) {
+    if (age < 0.0 || age > 1.25) return 0.0;
+
+    float first = exp(-age * 18.0);
+    float second = 0.85 * exp(-abs(age - 0.16) * 38.0);
+    float third = 0.38 * exp(-abs(age - 0.39) * 24.0);
+    return clamp(first + second + third, 0.0, 1.25);
+}
+
+vec3 boltPoint(int index, float seed) {
+    float f = float(index) / float(BOLT_SEGMENTS);
+    float taper = sin(f * 3.14159265);
+    float key = seed * 0.013 + float(index) * 17.17;
+    vec2 jitter = vec2(hash11(key), hash11(key + 41.7)) - 0.5;
+    jitter *= 7.0 * taper;
+    return FlashWorld.xyz + vec3(jitter.x, BOLT_HEIGHT * (1.0 - f), jitter.y);
+}
+
+float raySegmentDistance(vec3 rayOrigin, vec3 rayDirection, vec3 a, vec3 b, out float rayTravel) {
+    vec3 segment = b - a;
+    vec3 fromA = rayOrigin - a;
+    float raySegment = dot(rayDirection, segment);
+    float segmentSquared = dot(segment, segment);
+    float rayFromA = dot(rayDirection, fromA);
+    float segmentFromA = dot(segment, fromA);
+    float denominator = max(segmentSquared - raySegment * raySegment, 1e-4);
+    float alongSegment = clamp((segmentFromA - raySegment * rayFromA) / denominator, 0.0, 1.0);
+
+    rayTravel = max(raySegment * alongSegment - rayFromA, 0.0);
+    vec3 onRay = rayOrigin + rayDirection * rayTravel;
+    vec3 onSegment = a + segment * alongSegment;
+    return length(onRay - onSegment);
+}
+
+// The bolt is real world-space geometry evaluated against the view ray. Its closest point must be
+// in front of the depth buffer, so walls and ruins occlude it instead of it reading as an overlay.
+float lightningBolt(vec3 rayDirection, float visibleTravel, float seed) {
+    float closest = 1e5;
+    vec3 a = boltPoint(0, seed);
+
+    for (int i = 0; i < BOLT_SEGMENTS; ++i) {
+        vec3 b = boltPoint(i + 1, seed);
+        float rayTravel;
+        float distance = raySegmentDistance(vec3(0.0), rayDirection, a, b, rayTravel);
+        if (rayTravel <= visibleTravel + 0.5) closest = min(closest, distance);
+        a = b;
+    }
+
+    float core = 1.0 - smoothstep(0.25, 0.9, closest);
+    float glow = exp(-closest * 0.55) * 0.55;
+    return core * 2.4 + glow;
 }
 
 // Keyed to world direction, so stars hold still while you turn.
@@ -297,5 +360,27 @@ void main() {
     float optical = through * FOG_DENSITY + hazeThrough * HAZE_DENSITY;
     float fog = (1.0 - exp(-optical)) * FOG_STRENGTH;
 
-    fragColor = vec4(mix(color, FogColor.rgb, fog), 1.0);
+    color = mix(color, FogColor.rgb, fog);
+
+    float flash = lightningPulse(FlashWorld.w);
+    if (flash > 0.001) {
+        vec3 boltMiddle = FlashWorld.xyz + vec3(0.0, BOLT_HEIGHT * 0.55, 0.0);
+        vec3 towardBolt = normalize(boltMiddle);
+
+        // A localized sky bloom makes the flash come from the bolt's bearing. On drawn geometry,
+        // distance to the strike controls the illumination so nearby walls brighten more strongly.
+        if (isSky) {
+            float bearing = pow(max(dot(direction, towardBolt), 0.0), 22.0);
+            color += FLASH_COLOR * flash * bearing * 0.42;
+        } else {
+            vec3 sceneWorld = direction * travel;
+            float proximity = exp(-length(sceneWorld - FlashWorld.xyz) / 105.0);
+            color += FLASH_COLOR * flash * proximity * 0.28;
+        }
+
+        float bolt = lightningBolt(direction, travel, FlashData.x);
+        color += FLASH_COLOR * bolt * flash;
+    }
+
+    fragColor = vec4(color, 1.0);
 }

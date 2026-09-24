@@ -23,7 +23,7 @@ public class PerpetuityClient implements ClientModInitializer {
         TeleportOutOfEchoesEvents.init();
 
         ClientPlayNetworking.registerGlobalReceiver(BeginTimerPayload.ID, new BeginTimerPayload.Receiver());
-        ClientPlayNetworking.registerGlobalReceiver(RiftBangPayload.ID, new RiftBangPayload.Receiever());
+        ClientPlayNetworking.registerGlobalReceiver(RiftBangPayload.ID, new RiftBangPayload.Receiver());
     }
 
     public static Text getSneakKeyName() {

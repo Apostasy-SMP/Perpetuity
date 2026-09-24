@@ -26,6 +26,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.joml.Matrix4f;
 
@@ -62,13 +63,23 @@ public final class EchoesSkyPass implements CompositorPass {
     private static final String UNIFORM_BLOCK = "EchoesSky";
     private static final int PRIORITY = 100;
 
-    private static final int BLOCK_BYTES = new Std140SizeCalculator().putMat4f().putVec4().get();
+    private static final int BLOCK_BYTES = new Std140SizeCalculator()
+            .putMat4f()
+            .putVec4()
+            .putVec4()
+            .putVec4()
+            .get();
 
     /**
      * @param cameraToWorld rotation only; turns camera-space rays into world-space ones
      * @param seconds       continuous clock - {@code GameTime} wraps once per day and would pop
      */
-    private record SkyUniforms(Matrix4f cameraToWorld, float camX, float camY, float camZ, float seconds) {}
+    private record SkyUniforms(Matrix4f cameraToWorld,
+                               float camX, float camY, float camZ, float seconds,
+                               float flashX, float flashY, float flashZ, float flashAge,
+                               float flashSeed) {}
+
+    private record Flash(Vec3d position, int seed, long startedNanos) {}
 
     private static final EchoesSkyPass INSTANCE = new EchoesSkyPass();
     private static CompositorPassHandle handle;
@@ -76,6 +87,7 @@ public final class EchoesSkyPass implements CompositorPass {
     private final ShaderMaterial material;
     private final DynamicUniformBlock<SkyUniforms> uniforms;
     private final long start = System.nanoTime();
+    private volatile Flash flash;
     private boolean prepared;
 
     private EchoesSkyPass() {
@@ -100,6 +112,11 @@ public final class EchoesSkyPass implements CompositorPass {
         WorldRenderEvents.START_MAIN.register(context -> sync(MinecraftClient.getInstance().world));
     }
 
+    /** Starts a world-anchored lightning flash received with the distant bang event. */
+    public static void flash(Vec3d position, int seed) {
+        INSTANCE.flash = new Flash(position, seed, System.nanoTime());
+    }
+
     private static void sync(ClientWorld world) {
         boolean wanted = world != null && world.getRegistryKey().equals(THE_ECHOES);
         if (wanted == (handle != null)) return;
@@ -109,12 +126,15 @@ public final class EchoesSkyPass implements CompositorPass {
         } else {
             handle.close();
             handle = null;
+            INSTANCE.flash = null;
         }
     }
 
     private static void encode(Std140Builder builder, SkyUniforms value) {
         builder.putMat4f(value.cameraToWorld())
-                .putVec4(value.camX(), value.camY(), value.camZ(), value.seconds());
+                .putVec4(value.camX(), value.camY(), value.camZ(), value.seconds())
+                .putVec4(value.flashX(), value.flashY(), value.flashZ(), value.flashAge())
+                .putVec4(value.flashSeed(), 0.0F, 0.0F, 0.0F);
     }
 
     @Override
@@ -133,12 +153,26 @@ public final class EchoesSkyPass implements CompositorPass {
 
         // Orientation already maps camera space to world space; the view matrix is its inverse.
         Matrix4f cameraToWorld = usable ? new Matrix4f().rotation(camera.orientation) : new Matrix4f();
-        float seconds = (System.nanoTime() - start) / 1_000_000_000.0f;
+        long now = System.nanoTime();
+        float seconds = (now - start) / 1_000_000_000.0f;
+        Flash currentFlash = flash;
+        Vec3d flashPosition = currentFlash == null ? Vec3d.ZERO : currentFlash.position();
+        float flashAge = currentFlash == null
+                ? 1000.0F
+                : (now - currentFlash.startedNanos()) / 1_000_000_000.0F;
+        float flashSeed = currentFlash == null ? 0.0F : currentFlash.seed();
+        float flashX = usable && currentFlash != null ? (float) (flashPosition.x - camera.pos.x) : 0.0F;
+        float flashY = usable && currentFlash != null ? (float) (flashPosition.y - camera.pos.y) : 0.0F;
+        float flashZ = usable && currentFlash != null ? (float) (flashPosition.z - camera.pos.z) : 0.0F;
+
+        if (flashAge > 1.5F) flash = null;
 
         GpuBufferSlice slice = uniforms.upload(usable
                 ? new SkyUniforms(cameraToWorld,
-                (float) camera.pos.x, (float) camera.pos.y, (float) camera.pos.z, seconds)
-                : new SkyUniforms(cameraToWorld, 0.0f, 0.0f, 0.0f, seconds));
+                        (float) camera.pos.x, (float) camera.pos.y, (float) camera.pos.z, seconds,
+                        flashX, flashY, flashZ, flashAge, flashSeed)
+                : new SkyUniforms(cameraToWorld, 0.0F, 0.0F, 0.0F, seconds,
+                        0.0F, 0.0F, 0.0F, flashAge, flashSeed));
 
         GpuSampler linear = RenderSystem.getSamplerCache().get(FilterMode.LINEAR);
         GpuSampler nearest = RenderSystem.getSamplerCache().get(FilterMode.NEAREST);
