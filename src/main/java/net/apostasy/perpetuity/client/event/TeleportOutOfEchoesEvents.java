@@ -26,6 +26,7 @@ public class TeleportOutOfEchoesEvents {
 
     public static void execute(int timeTillRelease) {
         timeTillTP = timeTillRelease * 20;
+        opacity = 0.0F;
     }
 
     public static int timeTillTP = 0;
@@ -55,10 +56,10 @@ public class TeleportOutOfEchoesEvents {
             }
 
             if (EchoUtil.isInLabyrinth(player)) {
-                if (timeTillTP <= 80) {
-                    if (opacity < 1.0F) {
-                        opacity += 0.01F;
-                    }
+                if (timeTillTP > 0 && timeTillTP <= 80) {
+                    opacity = Math.min(0.9F, opacity + 0.01F);
+                } else if (opacity > 0.0F) {
+                    opacity = Math.max(0.0F, opacity - 0.025F);
                 }
             } else {
                 if (opacity > 0.0F) {
