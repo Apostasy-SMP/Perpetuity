@@ -27,8 +27,8 @@ public class EchoesRiftBangEvent implements ServerTickEvents.StartWorldTick {
                             LabyrinthChunkGenerator.TERRAIN_TOP_Y,
                             player.getZ() + Math.sin(angle) * distance
                     );
-                    ServerPlayNetworking.send(player,
-                            new RiftBangPayload(strike, world.getRandom().nextInt()));
+//                    ServerPlayNetworking.send(player,
+//                            new RiftBangPayload(strike, world.getRandom().nextInt()));
                 }
             }
         }
